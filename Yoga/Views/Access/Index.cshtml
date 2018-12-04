@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Yoga.Models.VIP>
+
+
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<h1>Comeback Yoga Administration</h1>
+
+<h3>Current Admins</h3>
+<ul>
+	@foreach (var user in Model)
+	{
+		<li>@user.FirstName @user.LastName, @user.Email <a asp-route-id="@user.Id" asp-action="Edit">Edit</a></li>
+	}
+</ul>
+<a asp-action="Create">Add an Admin</a>
+

@@ -1,0 +1,33 @@
+﻿@model IndexViewModel
+@{
+	ViewData["Title"] = "Profile";
+	ViewData.AddActivePage(ManageNavPages.Index);
+}
+
+<h4>@ViewData["Title"]</h4>
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+<form method="post">
+	<div asp-validation-summary="All"></div>
+	<label asp-for="Username"></label>
+	<input asp-for="Username" disabled />
+	<label asp-for="Email"></label>
+	@if (Model.IsEmailConfirmed)
+	{
+		<div>
+			<input asp-for="Email" />
+
+		</div>
+	}
+	else
+	{
+		<input asp-for="Email" />
+		<button asp-action="SendVerificationEmail">Send verification email</button>
+	}
+	<span asp-validation-for="Email"></span>
+	<label asp-for="PhoneNumber"></label>
+	<input asp-for="PhoneNumber" />
+	<span asp-validation-for="PhoneNumber"></span>
+	<button type="submit">Save</button>
+</form>
+
+

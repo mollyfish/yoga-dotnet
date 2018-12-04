@@ -1,0 +1,25 @@
+﻿@model LoginWith2faViewModel
+@{
+	ViewData["Title"] = "Two-factor authentication";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
+<form method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+	<input asp-for="RememberMe" type="hidden" />
+	<div asp-validation-summary="All"></div>
+	<label asp-for="TwoFactorCode"></label>
+	<input asp-for="TwoFactorCode" autocomplete="off" />
+	<span asp-validation-for="TwoFactorCode"></span>
+	<label asp-for="RememberMachine">
+		<input asp-for="RememberMachine" />
+		@Html.DisplayNameFor(m => m.RememberMachine)
+	</label>
+	<button type="submit">Log in</button>
+</form>
+
+<p>
+	Don't have access to your authenticator device? You can
+	<a asp-action="LoginWithRecoveryCode" asp-route-returnUrl="@ViewData["ReturnUrl"]">log in with a recovery code</a>.
+</p>

@@ -1,0 +1,17 @@
+﻿@model LoginWithRecoveryCodeViewModel
+@{
+	ViewData["Title"] = "Recovery code verification";
+}
+
+<h2>@ViewData["Title"]</h2>
+<p>
+	You have requested to login with a recovery code. This login will not be remembered until you provide
+	an authenticator app code at login or disable 2FA and login again.
+</p>
+<form method="post">
+	<div asp-validation-summary="All"></div>
+	<label asp-for="RecoveryCode"></label>
+	<input asp-for="RecoveryCode" autocomplete="off" />
+	<span asp-validation-for="RecoveryCode"></span>
+	<button type="submit">Log in</button>
+</form>
