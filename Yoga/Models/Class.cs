@@ -11,7 +11,7 @@ namespace Yoga.Models
 		public string InstructorId { get; set; }
 		public string Title { get; set; }
 		public DateTime Date { get; set; }
-		public PhysicalAddress Location { get; set; }
+		public int LocationId { get; set; }
 		//ICollection<User> Students { get; set; }
 
 	}

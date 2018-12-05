@@ -15,7 +15,6 @@
 	<form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
 		<h4>Use a local account to log in.</h4>
 		<div asp-validation-summary="All"></div>
-		<p>Hello hello</p>
 
 		<label asp-for="Username"></label>
 		<input asp-for="Username" />
@@ -40,7 +39,7 @@
 		</p>
 	</form>
 </section>
-<section>
+@*<section>
 	<h4>Use another service to log in.</h4>
 
 	@{
@@ -68,6 +67,6 @@
 			</form>
 		}
 	}
-</section>
+</section>*@
 
 

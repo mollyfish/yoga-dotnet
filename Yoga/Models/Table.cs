@@ -10,6 +10,6 @@ namespace Yoga.Models
 		public int Id { get; set; }
 		public string CaptainId { get; set; }
 		public int Capacity { get; set; }
-		//ICollection<User> Guests { get; set; }
+		public int EventId { get; set; }
 	}
 }

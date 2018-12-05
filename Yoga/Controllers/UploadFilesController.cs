@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Yoga.Controllers
 {
+	[Authorize(Policy = "AdminsOnly")]
 	public class UploadFilesController : Controller
 	{
 		private readonly YogaDbContext _context;

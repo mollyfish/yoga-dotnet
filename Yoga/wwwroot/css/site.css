@@ -1,4 +1,70 @@
+html, body
+{
+	height: 100%;
+}
+
 body
 {
 	background-color: paleturquoise;
+	display: flex;
+	flex-direction: column;
+	font-size: 16px;
+}
+
+h1 {
+	font-size: 300%;
+}
+
+h2 {
+	font-size: 200%;
+}
+
+h3 {
+	font-size: 180%;
+}
+
+h4 {
+	font-size: 130%;
+}
+
+h5 {
+	font-size: 120%;
+}
+
+h6 {
+	font-size: 110%;
+}
+p {
+	font-size: 100%;
+}
+
+header {
+	background-color: gray;
+}
+
+nav ul li {
+	display: inline-block;
+	padding: 0 1em;
+	float: right;
+}
+
+footer {
+	text-align: center;
+	background-color: gray;
+}
+
+.sticky-wrapper {
+	flex: 1 0 auto;
+}
+
+.login-register {
+	text-align: right;
+	padding: 0 1em;
+	outline: 1px solid blue;
+}
+
+.login-status {
+	text-align: right;
+	padding: 0 1em;
+	outline: 1px solid red;
 }
