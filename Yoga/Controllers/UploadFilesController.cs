@@ -68,7 +68,7 @@ namespace Yoga.Controllers
 				newDonations = new List<Donation>();
 				// parse the Donation data
 				UploadDonations(filePath);
-				// insert the nes donations into the database
+				// insert the new donations into the database
 				while (newDonations.Count > 0)
 				{
 					// check for a doantion on the same date, of the same amount, 
@@ -181,7 +181,7 @@ namespace Yoga.Controllers
 						// make a new Donation instance and add data to it
 						Donation newDonation = new Donation();
 						// add the data
-						newDonation.DonorId = DonorIds.First().ToString();
+						newDonation.DonorId = DonorIds.First();
 						// remove that data from its list, reducing the list by 1 every time this while loop runs
 						DonorIds.RemoveAt(0);
 						// do that for all data points
@@ -321,7 +321,7 @@ namespace Yoga.Controllers
 						// make a new Donation instance and add data to it
 						Donation newDonation = new Donation();
 						// add the data
-						newDonation.DonorId = DonorIds.First().ToString();
+						newDonation.DonorId = DonorIds.First();
 						// remove that data from its list, reducing the list by 1 every time this while loop runs
 						DonorIds.RemoveAt(0);
 						// do that for all data points

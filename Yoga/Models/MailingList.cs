@@ -10,7 +10,7 @@ namespace Yoga.Models
 		public int Id { get; set; }
 		public string Title { get; set; }
 
-		IEnumerable<EventMailingList> EventMailingLists { get; set; }
-		IEnumerable<UserMailingList> UserMailingLists { get; set; }
+		ICollection<EventMailingList> EventMailingLists { get; set; }
+		ICollection<UserMailingList> UserMailingLists { get; set; }
 	}
 }

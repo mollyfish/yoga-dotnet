@@ -259,6 +259,8 @@ namespace Yoga.Controllers
 					{
 						await _userManager.AddToRoleAsync(user, UserRole.Admin);
 					}
+
+
 					_logger.LogInformation("User created a new account with password.");
 
 					var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

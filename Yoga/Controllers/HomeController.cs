@@ -10,11 +10,13 @@ namespace Yoga.Controllers
 {
 	public class HomeController : Controller
 	{
+		[HttpGet]
 		public IActionResult Index()
 		{
 			return View();
 		}
 
+		[HttpGet]
 		public IActionResult About()
 		{
 			ViewData["Message"] = "Your application description page.";
@@ -22,6 +24,7 @@ namespace Yoga.Controllers
 			return View();
 		}
 
+		[HttpGet]
 		public IActionResult Contact()
 		{
 			ViewData["Message"] = "Your contact page.";
@@ -29,6 +32,7 @@ namespace Yoga.Controllers
 			return View();
 		}
 
+		[HttpGet]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

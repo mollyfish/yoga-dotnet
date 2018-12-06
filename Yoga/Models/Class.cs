@@ -8,7 +8,7 @@ namespace Yoga.Models
 	public class Class
 	{
 		public int Id { get; set; }
-		public string InstructorId { get; set; }
+		public int InstructorId { get; set; }
 		public string Title { get; set; }
 		public DateTime Date { get; set; }
 		public int LocationId { get; set; }
