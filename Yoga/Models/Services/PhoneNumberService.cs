@@ -26,6 +26,11 @@ namespace Yoga.Models.Services
 			return await _context.PhoneNumbers.ToListAsync();
 		}
 
+		public async Task<IEnumerable<PhoneNumber>> GetPhoneNumbersByOwner(int ownerId)
+		{
+			return await _context.PhoneNumbers.Where(e => e.PersonId == ownerId).ToListAsync();
+		}
+
 		public async Task<PhoneViewModel> GetPhoneNumber(int id, int owner)
 		{
 			var phone = await _context.PhoneNumbers.FindAsync(id);

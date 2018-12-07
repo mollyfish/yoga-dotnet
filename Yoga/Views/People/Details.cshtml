@@ -10,19 +10,19 @@
 <p>@Model.person.FirstName @Model.person.LastName</p> <a asp-action="EditName" asp-route-id="@Model.person.Id">Edit</a>
 
 <h5>Email Addresses</h5>
-	<ul>
-		@foreach (var email in Model.person.EmailAddresses)
-		{
-			<li>
-				@if (email.IsPrimary)
-				{
-					<p>Primary</p>
-				}
-				@email.Email <a asp-controller="Email" asp-action="Edit" asp-route-id="@email.Id">Edit</a>
-			</li>
-		}
-	</ul>
-	<a asp-controller="Email" asp-action="Create" asp-route-id="@Model.person.Id">Add new email</a>
+<ul>
+	@foreach (var email in Model.person.EmailAddresses)
+	{
+		<li>
+			@if (email.IsPrimary)
+			{
+				<p>Primary</p>
+			}
+			@email.Email <a asp-controller="Email" asp-action="Edit" asp-route-id="@email.Id">Edit</a>
+		</li>
+	}
+</ul>
+<a asp-controller="Email" asp-action="Create" asp-route-id="@Model.person.Id">Add new email</a>
 
 
 <h5>Mailing Addresses</h5>
@@ -59,6 +59,9 @@
 		</li>
 	}
 </ul>
+<a asp-controller="PhoneNumber" asp-action="Create" asp-route-id="@Model.person.Id">Add new phone number</a>
+
+
 
 
 <a asp-action="Index">Back to List</a>

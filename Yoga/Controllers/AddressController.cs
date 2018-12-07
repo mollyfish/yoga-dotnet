@@ -16,25 +16,15 @@ namespace Yoga.Controllers
 	{
 		private readonly IPeople _people;
 		private readonly IAddress _addresses;
-		//private readonly IPhoneNumber _phoneNumbers;
 
 		public AddressController(
 			IPeople people,
-			//IPhoneNumber phoneNumbers,
 			IAddress addresses
 			)
 		{
 			_people = people;
 			_addresses = addresses;
-			//_phoneNumbers = phoneNumbers;
 		}
-
-		//[HttpGet]
-		//public async Task<IActionResult> Create(int Id)
-		//{
-		//	var owner = await _people.GetPerson(Id);
-		//	return View(owner);
-		//}
 
 		[HttpGet]
 		public async Task<IActionResult> Create(int Id)

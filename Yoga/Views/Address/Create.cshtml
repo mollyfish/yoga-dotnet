@@ -9,7 +9,6 @@
 
 <form asp-action="Create">
 	<div asp-validation-summary="ModelOnly"></div>
-	<input type="hidden" asp-for="@Model.newAddress.PersonId" value="@Model.Owner.Id" />
 	<input type="hidden" asp-for="@Model.Owner.Id" />
 
 	<label asp-for="@Model.newAddress.Title"></label>

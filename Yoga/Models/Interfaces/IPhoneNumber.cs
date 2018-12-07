@@ -15,6 +15,13 @@ namespace Yoga.Models.Interfaces
 		Task<IEnumerable<PhoneNumber>> GetPhoneNumbers();
 
 		/// <summary>
+		/// Get list of Phone numbers by owner
+		/// </summary>
+		/// <param name="Id">owner Id</param>
+		/// <returns>List of phone numbers that belong to the person with given id</returns>
+		Task<IEnumerable<PhoneNumber>> GetPhoneNumbersByOwner(int Id);
+
+		/// <summary>
 		/// Get single phone number by Id
 		/// </summary>
 		/// <returns>Single phone number</returns>
