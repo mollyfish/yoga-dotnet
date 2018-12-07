@@ -68,54 +68,33 @@ namespace Yoga.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Owner")] EmailViewModel evm)
 		{
-			//if (ModelState.IsValid)
-			//{
-			//	var emailAddresses = await _emailAddresses.GetEmailAddressesByOwner(evm.Owner.Id);
-			//	if (evm.Email.IsPrimary)
-			//	{
-			//		foreach (var email in emailAddresses)
-			//		{
-			//			if (email.IsPrimary && email.Id != evm.Email.Id)
-			//			{
-			//				email.IsPrimary = false;
-			//				await _emailAddresses.UpdateEmailAddress(email);
-			//			}
-			//		}
-			//	} else
-			//	{
-			//		if (emailAddresses.Count() == 1 && emailAddresses.First().Id == evm.Email.Id)
-			//		{
-			//			evm.Email.IsPrimary = true;
-			//		}
-			//	}
-			//}
 			if (ModelState.IsValid)
 			{
 				await _emailAddresses.UpdateEmailAddress(evm.Email);
-			}
-			var emailAddresses = await _emailAddresses.GetEmailAddressesByOwner(evm.Owner.Id);
-			if (evm.Email.IsPrimary)
-			{
-				foreach (var email in emailAddresses)
+
+				var emailAddresses = await _emailAddresses.GetEmailAddressesByOwner(evm.Owner.Id);
+				if (evm.Email.IsPrimary)
 				{
-					if (email.IsPrimary && email.Id != evm.Email.Id)
+					foreach (var email in emailAddresses)
 					{
-						email.IsPrimary = false;
-						await _emailAddresses.UpdateEmailAddress(email);
+						if (email.IsPrimary && email.Id != evm.Email.Id)
+						{
+							email.IsPrimary = false;
+							await _emailAddresses.UpdateEmailAddress(email);
+						}
 					}
 				}
-			}
-			else
-			{
-				if (emailAddresses.Count() == 1 && emailAddresses.First().Id == evm.Email.Id)
+				else
 				{
-					evm.Email.IsPrimary = true;
-					await _emailAddresses.UpdateEmailAddress(evm.Email);
+					if (emailAddresses.Count() == 1 && emailAddresses.First().Id == evm.Email.Id)
+					{
+						evm.Email.IsPrimary = true;
+						await _emailAddresses.UpdateEmailAddress(evm.Email);
+					}
 				}
+				return RedirectToAction("Details", "People", new { id = evm.Owner.Id });
 			}
-			return RedirectToAction("Details", "People", new { id = evm.Owner.Id });
-
-			//return View(evm.Email);
+			return View(evm.Email);
 		}
 
 	}
