@@ -1,0 +1,33 @@
+﻿@model Yoga.Models.PersonViewModels.DisplayPeopleDataViewModel
+
+
+@{
+	ViewData["Title"] = "People";
+}
+
+<h1>Comeback People</h1>
+
+<h3>Everyone!</h3>
+<ul>
+	@foreach (var person in Model.PeopleList)
+	{
+		<li>@person.FirstName @person.LastName <a asp-route-id="@person.Id" asp-action="Details">Details</a></li>
+		@foreach (var address in person.MailingAddresses)
+		{
+			<li>@address.StreetAddress
+				@if (address.StreetAddressCont != null) {<br />@address.StreetAddressCont}
+				<br />@address.City, @address.State @address.ZipCode
+			</li>
+		}
+		@foreach (var phone in person.PhoneNumbers)
+		{
+			<li>@phone.Phone</li>
+		}
+		@foreach (var email in person.EmailAddresses)
+		{
+			<li>@email.Email</li>
+		}
+	}
+</ul>
+<a asp-action="Create">Add someone</a>
+

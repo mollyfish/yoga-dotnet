@@ -1,0 +1,52 @@
+﻿@model Yoga.Models.CreatePersonViewModel
+
+@{
+	ViewData["Title"] = "Create";
+}
+
+<h2>Create new Person</h2>
+
+
+<form asp-action="Create">
+	<div asp-validation-summary="ModelOnly"></div>
+
+	<label asp-for="FirstName"></label>
+	<input asp-for="FirstName" />
+	<span asp-validation-for="FirstName"></span>
+
+	<label asp-for="LastName"></label>
+	<input asp-for="LastName" />
+	<span asp-validation-for="LastName"></span>
+
+	<label asp-for="Email"></label>
+	<input asp-for="Email" />
+	<span asp-validation-for="Email"></span>
+
+	<label asp-for="StreetAddress"></label>
+	<input asp-for="StreetAddress" />
+	<span asp-validation-for="StreetAddress"></span>
+
+	<label asp-for="StreetAddressCont"></label>
+	<input asp-for="StreetAddressCont" />
+	<span asp-validation-for="StreetAddressCont"></span>
+
+	<label asp-for="City"></label>
+	<input asp-for="City" />
+	<span asp-validation-for="City"></span>
+
+	<label asp-for="State"></label>
+	<input asp-for="State" />
+	<span asp-validation-for="State"></span>
+
+	<label asp-for="ZipCode"></label>
+	<input asp-for="ZipCode" />
+	<span asp-validation-for="ZipCode"></span>
+
+	<label asp-for="PhoneNumber"></label>
+	<input asp-for="PhoneNumber" />
+	<span asp-validation-for="PhoneNumber"></span>
+
+	<input type="submit" value="Create" />
+</form>
+
+<a asp-action="Index">Back to List</a>

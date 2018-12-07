@@ -66,6 +66,10 @@ namespace Yoga
 			// Add application services.
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddScoped<IVIP, VIPService>();
+			services.AddScoped<IPeople, PeopleService>();
+			services.AddScoped<IAddress, AddressService>();
+			services.AddScoped<IEmailAddress, EmailAddressService>();
+			services.AddScoped<IPhoneNumber, PhoneNumberService>();
 
 		}
 

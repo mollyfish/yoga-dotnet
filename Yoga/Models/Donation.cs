@@ -8,7 +8,7 @@ namespace Yoga.Models
 	public class Donation
 	{
 		public int Id { get; set; }
-		public string DonorId { get; set; }
+		public int DonorId { get; set; }
 		public string DonorDisplayName { get; set; }
 		public bool DisplayAsAnonymous { get; set; }
 		public int? EventId { get; set; }

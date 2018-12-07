@@ -1,0 +1,24 @@
+﻿@model Yoga.Models.EmailViewModels.AddEmailViewModel
+
+@{
+	ViewData["Title"] = "Add Email Address";
+}
+<h2>Add Email Address</h2>
+<h4>@Model.Owner.FirstName @Model.Owner.LastName</h4>
+
+
+<form asp-action="Create">
+	<input type="hidden" asp-for="@Model.newEmail.PersonId" value="@Model.Owner.Id" />
+	<input type="hidden" asp-for="@Model.Owner.Id" />
+
+	<label asp-for="@Model.newEmail.Email"></label>
+	<input asp-for="@Model.newEmail.Email" />
+	<span asp-validation-for="@Model.newEmail.Email"></span>
+
+	<label asp-for="@Model.newEmail.IsPrimary"></label>
+	<input asp-for="@Model.newEmail.IsPrimary" />
+	<span asp-validation-for="@Model.newEmail.IsPrimary"></span>
+	<input type="submit" value="Save" />
+</form>
+
+<a asp-controller="People" asp-action="Details" asp-route-id="@Model.Owner.Id">Back to Details</a>

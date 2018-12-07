@@ -18,6 +18,7 @@ namespace Yoga.Controllers
 	{
 		private readonly YogaDbContext _context;
 		private static List<Donation> newDonations;
+		private static List<Person> newPeople;
 
 		public UploadFilesController(YogaDbContext context)
 		{
@@ -68,7 +69,7 @@ namespace Yoga.Controllers
 				newDonations = new List<Donation>();
 				// parse the Donation data
 				UploadDonations(filePath);
-				// insert the nes donations into the database
+				// insert the new donations into the database
 				while (newDonations.Count > 0)
 				{
 					// check for a doantion on the same date, of the same amount, 
@@ -83,6 +84,12 @@ namespace Yoga.Controllers
 					// remove the added donation from the list
 					newDonations.RemoveAt(0);
 				}
+			} else if (dataType == "person")
+			{
+				// create a list to hold the new data
+				newPeople = new List<Person>();
+				// parse the Donation data
+				//UploadPeople(filePath);
 			}
 			// return the user to the view
 			return View(nameof(Index));
@@ -181,7 +188,7 @@ namespace Yoga.Controllers
 						// make a new Donation instance and add data to it
 						Donation newDonation = new Donation();
 						// add the data
-						newDonation.DonorId = DonorIds.First().ToString();
+						newDonation.DonorId = DonorIds.First();
 						// remove that data from its list, reducing the list by 1 every time this while loop runs
 						DonorIds.RemoveAt(0);
 						// do that for all data points
@@ -229,144 +236,144 @@ namespace Yoga.Controllers
 			}
 		}
 
-		private static void UploadUsers(string pathToFile)
-		{
-			using (var reader = new StreamReader(pathToFile))
-			{
-				// create lists to hold column info
-				List<string> headings = new List<string>();
-				List<int> DonorIds = new List<int>();
-				List<string> DonorDisplayNames = new List<string>();
-				List<bool> DisplayAsAnonymous = new List<bool>();
-				List<int> EventIds = new List<int>();
-				List<decimal> Amounts = new List<decimal>();
-				List<DateTime> Dates = new List<DateTime>();
-				List<string> Honorees = new List<string>();
-				List<bool> TaxReceiptSent = new List<bool>();
-				List<bool> ThankYouSent = new List<bool>();
-				List<DateTime> TaxReceiptSentDate = new List<DateTime>();
-				List<DateTime> ThankYouSentDate = new List<DateTime>();
-				List<string> HowPaid = new List<string>();
+		//private static void UploadPeople(string pathToFile)
+		//{
+		//	using (var reader = new StreamReader(pathToFile))
+		//	{
+		//		// create lists to hold column info
+		//		List<string> headings = new List<string>();
+		//		//List<int> DonorIds = new List<int>();
+		//		//List<string> DonorDisplayNames = new List<string>();
+		//		//List<bool> DisplayAsAnonymous = new List<bool>();
+		//		//List<int> EventIds = new List<int>();
+		//		//List<decimal> Amounts = new List<decimal>();
+		//		//List<DateTime> Dates = new List<DateTime>();
+		//		//List<string> Honorees = new List<string>();
+		//		//List<bool> TaxReceiptSent = new List<bool>();
+		//		//List<bool> ThankYouSent = new List<bool>();
+		//		//List<DateTime> TaxReceiptSentDate = new List<DateTime>();
+		//		//List<DateTime> ThankYouSentDate = new List<DateTime>();
+		//		//List<string> HowPaid = new List<string>();
 
-				// while there is still content to read...
-				int counter = 0;
-				while (!reader.EndOfStream)
-				{
-					var line = reader.ReadLine();
-					var values = line.Split(',');
-					// strip the column headings
-					if (counter == 0)
-					{
-						for (int i = 0; i < values.Length; i++)
-						{
-							headings.Add(values[i]);
-						}
-						counter++;
-						continue;
-					}
-					// pull the appropriate values and add them to the list that represents that column
-					DonorIds.Add(int.Parse(values[0]));
-					DonorDisplayNames.Add(values[1]);
-					if (values[2] == "yes")
-					{
-						DisplayAsAnonymous.Add(true);
-					}
-					else
-					{
-						DisplayAsAnonymous.Add(false);
-					}
-					EventIds.Add(int.Parse(values[3]));
-					Amounts.Add(decimal.Parse(values[4]));
-					Dates.Add(DateTime.Parse(values[5]));
-					Honorees.Add(values[6]);
-					if (values[7] == "yes")
-					{
-						TaxReceiptSent.Add(true);
-					}
-					else
-					{
-						TaxReceiptSent.Add(false);
-					}
-					if (values[8] == "yes")
-					{
-						ThankYouSent.Add(true);
-					}
-					else
-					{
-						ThankYouSent.Add(false);
-					}
-					TaxReceiptSentDate.Add(DateTime.Parse(values[9]));
-					ThankYouSentDate.Add(DateTime.Parse(values[10]));
-					if (values[11].ToLower() == "cash")
-					{
-						HowPaid.Add("cash");
-					}
-					else if (values[11].ToLower() == "check")
-					{
-						HowPaid.Add("check");
-					}
-					else
-					{
-						HowPaid.Add("card");
-					}
-					counter++;
-				}
-				// all data is now in lists
-				// all donations must have a donation date, so run the while loop off that list
-				try
-				{
-					// while there is still stuff to deal with...
-					while (Dates.Count != 0)
-					{
-						// make a new Donation instance and add data to it
-						Donation newDonation = new Donation();
-						// add the data
-						newDonation.DonorId = DonorIds.First().ToString();
-						// remove that data from its list, reducing the list by 1 every time this while loop runs
-						DonorIds.RemoveAt(0);
-						// do that for all data points
-						newDonation.DonorDisplayName = DonorDisplayNames.First();
-						DonorDisplayNames.RemoveAt(0);
-						newDonation.DisplayAsAnonymous = DisplayAsAnonymous.First();
-						DisplayAsAnonymous.RemoveAt(0);
-						newDonation.EventId = EventIds.First();
-						EventIds.RemoveAt(0);
-						newDonation.Amount = Amounts.First();
-						Amounts.RemoveAt(0);
-						newDonation.Date = Dates.First();
-						Dates.RemoveAt(0);
-						newDonation.Honoree = Honorees.First();
-						Honorees.RemoveAt(0);
-						newDonation.TaxReceiptSent = TaxReceiptSent.First();
-						TaxReceiptSent.RemoveAt(0);
-						newDonation.ThankYouSent = ThankYouSent.First();
-						ThankYouSent.RemoveAt(0);
-						newDonation.TaxReceiptSentDate = TaxReceiptSentDate.First();
-						TaxReceiptSentDate.RemoveAt(0);
-						newDonation.ThankYouSentDate = ThankYouSentDate.First();
-						ThankYouSentDate.RemoveAt(0);
-						if (HowPaid.First() == "cash")
-						{
-							newDonation.DonationType = DonationType.cash;
-						}
-						else if (HowPaid.First() == "check")
-						{
-							newDonation.DonationType = DonationType.check;
-						}
-						else
-						{
-							newDonation.DonationType = DonationType.card;
-						}
-						// add the completed donation object to the list of new donations
-						newDonations.Add(newDonation);
-					}
-				}
-				catch (Exception e)
-				{
-					throw;
-				}
+		//		// while there is still content to read...
+		//		int counter = 0;
+		//		while (!reader.EndOfStream)
+		//		{
+		//			var line = reader.ReadLine();
+		//			var values = line.Split(',');
+		//			// strip the column headings
+		//			if (counter == 0)
+		//			{
+		//				for (int i = 0; i < values.Length; i++)
+		//				{
+		//					headings.Add(values[i]);
+		//				}
+		//				counter++;
+		//				continue;
+		//			}
+		//			// pull the appropriate values and add them to the list that represents that column
+		//			DonorIds.Add(int.Parse(values[0]));
+		//			DonorDisplayNames.Add(values[1]);
+		//			if (values[2] == "yes")
+		//			{
+		//				DisplayAsAnonymous.Add(true);
+		//			}
+		//			else
+		//			{
+		//				DisplayAsAnonymous.Add(false);
+		//			}
+		//			EventIds.Add(int.Parse(values[3]));
+		//			Amounts.Add(decimal.Parse(values[4]));
+		//			Dates.Add(DateTime.Parse(values[5]));
+		//			Honorees.Add(values[6]);
+		//			if (values[7] == "yes")
+		//			{
+		//				TaxReceiptSent.Add(true);
+		//			}
+		//			else
+		//			{
+		//				TaxReceiptSent.Add(false);
+		//			}
+		//			if (values[8] == "yes")
+		//			{
+		//				ThankYouSent.Add(true);
+		//			}
+		//			else
+		//			{
+		//				ThankYouSent.Add(false);
+		//			}
+		//			TaxReceiptSentDate.Add(DateTime.Parse(values[9]));
+		//			ThankYouSentDate.Add(DateTime.Parse(values[10]));
+		//			if (values[11].ToLower() == "cash")
+		//			{
+		//				HowPaid.Add("cash");
+		//			}
+		//			else if (values[11].ToLower() == "check")
+		//			{
+		//				HowPaid.Add("check");
+		//			}
+		//			else
+		//			{
+		//				HowPaid.Add("card");
+		//			}
+		//			counter++;
+		//		}
+		//		// all data is now in lists
+		//		// all donations must have a donation date, so run the while loop off that list
+		//		try
+		//		{
+		//			// while there is still stuff to deal with...
+		//			while (Dates.Count != 0)
+		//			{
+		//				// make a new Donation instance and add data to it
+		//				Donation newDonation = new Donation();
+		//				// add the data
+		//				newDonation.DonorId = DonorIds.First();
+		//				// remove that data from its list, reducing the list by 1 every time this while loop runs
+		//				DonorIds.RemoveAt(0);
+		//				// do that for all data points
+		//				newDonation.DonorDisplayName = DonorDisplayNames.First();
+		//				DonorDisplayNames.RemoveAt(0);
+		//				newDonation.DisplayAsAnonymous = DisplayAsAnonymous.First();
+		//				DisplayAsAnonymous.RemoveAt(0);
+		//				newDonation.EventId = EventIds.First();
+		//				EventIds.RemoveAt(0);
+		//				newDonation.Amount = Amounts.First();
+		//				Amounts.RemoveAt(0);
+		//				newDonation.Date = Dates.First();
+		//				Dates.RemoveAt(0);
+		//				newDonation.Honoree = Honorees.First();
+		//				Honorees.RemoveAt(0);
+		//				newDonation.TaxReceiptSent = TaxReceiptSent.First();
+		//				TaxReceiptSent.RemoveAt(0);
+		//				newDonation.ThankYouSent = ThankYouSent.First();
+		//				ThankYouSent.RemoveAt(0);
+		//				newDonation.TaxReceiptSentDate = TaxReceiptSentDate.First();
+		//				TaxReceiptSentDate.RemoveAt(0);
+		//				newDonation.ThankYouSentDate = ThankYouSentDate.First();
+		//				ThankYouSentDate.RemoveAt(0);
+		//				if (HowPaid.First() == "cash")
+		//				{
+		//					newDonation.DonationType = DonationType.cash;
+		//				}
+		//				else if (HowPaid.First() == "check")
+		//				{
+		//					newDonation.DonationType = DonationType.check;
+		//				}
+		//				else
+		//				{
+		//					newDonation.DonationType = DonationType.card;
+		//				}
+		//				// add the completed donation object to the list of new donations
+		//				newDonations.Add(newDonation);
+		//			}
+		//		}
+		//		catch (Exception e)
+		//		{
+		//			throw;
+		//		}
 
-			}
-		}
+		//	}
+		//}
 	}
 }

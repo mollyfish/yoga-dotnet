@@ -1,0 +1,25 @@
+﻿@model Yoga.Models.EmailViewModels.EmailViewModel
+
+@{
+	ViewData["Title"] = "Edit";
+}
+<h2>Edit Email Address</h2>
+<h4>@Model.Owner.FirstName @Model.Owner.LastName</h4>
+
+
+<form asp-action="Edit">
+	<input type="hidden" asp-for="@Model.Email.Id" />
+	<input type="hidden" asp-for="@Model.Email.PersonId" />
+	<input type="hidden" asp-for="@Model.Email.DateAdded" />
+	<input type="hidden" asp-for="@Model.Owner.Id" />
+
+	<label asp-for="@Model.Email.Email"></label>
+	<input asp-for="@Model.Email.Email" />
+	<span asp-validation-for="@Model.Email.Email"></span>
+	<label asp-for="@Model.Email.IsPrimary"></label>
+	<input asp-for="@Model.Email.IsPrimary" />
+	<span asp-validation-for="@Model.Email.IsPrimary"></span>
+	<input type="submit" value="Save" />
+</form>
+
+<a asp-controller="People" asp-action="Details" asp-route-id="@Model.Owner.Id">Back to Details</a>
