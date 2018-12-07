@@ -10,14 +10,7 @@
 <p>@Model.person.FirstName @Model.person.LastName</p> <a asp-action="EditName" asp-route-id="@Model.person.Id">Edit</a>
 
 <h5>Email Addresses</h5>
-@if (Model.person.EmailAddresses.Count == 0)
-{
-	<a asp-controller="Email" asp-action="Create" asp-route-id="@Model.person.Id">Add Email</a>
-}
-else
-{
 	<ul>
-
 		@foreach (var email in Model.person.EmailAddresses)
 		{
 			<li>
@@ -29,7 +22,8 @@ else
 			</li>
 		}
 	</ul>
-}
+	<a asp-controller="Email" asp-action="Create" asp-route-id="@Model.person.Id">Add new email</a>
+
 
 <h5>Mailing Addresses</h5>
 <ul>
@@ -41,6 +35,7 @@ else
 				<p>Primary</p>
 			}
 			<address>
+				<span>@address.Title</span>
 				<span>@address.StreetAddress</span>
 				<span>@address.StreetAddressCont</span>
 				<span>@address.City, @address.State @address.ZipCode</span>
@@ -49,6 +44,7 @@ else
 		</li>
 	}
 </ul>
+<a asp-controller="Address" asp-action="Create" asp-route-id="@Model.person.Id">Add new address</a>
 
 <h5>Phone Numbers</h5>
 <ul>

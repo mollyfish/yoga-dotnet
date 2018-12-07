@@ -17,11 +17,9 @@ namespace Yoga.Controllers
 		private readonly IPeople _people;
 		private readonly IAddress _addresses;
 		//private readonly IPhoneNumber _phoneNumbers;
-		//private readonly IEmailAddress _emailAddresses;
 
 		public AddressController(
 			IPeople people,
-			//IEmailAddress emailAddresses,
 			//IPhoneNumber phoneNumbers,
 			IAddress addresses
 			)
@@ -29,14 +27,39 @@ namespace Yoga.Controllers
 			_people = people;
 			_addresses = addresses;
 			//_phoneNumbers = phoneNumbers;
-			//_emailAddresses = emailAddresses;
 		}
+
+		//[HttpGet]
+		//public async Task<IActionResult> Create(int Id)
+		//{
+		//	var owner = await _people.GetPerson(Id);
+		//	return View(owner);
+		//}
 
 		[HttpGet]
 		public async Task<IActionResult> Create(int Id)
 		{
-			var owner = await _people.GetPerson(Id);
-			return View(owner);
+			AddAddressViewModel model = new AddAddressViewModel();
+			model.Owner = await _people.GetPerson(Id);
+			return View(model);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(int id, [Bind("Id,newAddress,Owner")] AddAddressViewModel avm)
+		{
+			if (ModelState.IsValid)
+			{
+				avm.newAddress.DateAdded = DateTime.Now;
+				var addresses = await _addresses.GetAddressesByOwner(avm.Owner.Id);
+				if (addresses.Count() == 0)
+				{
+					avm.newAddress.IsPrimary = true;
+				}
+				await _addresses.CreatePhysicalAddress(avm.newAddress);
+				return RedirectToAction("Details", "People", new { id = avm.Owner.Id });
+			}
+			return View(avm);
 		}
 
 		[HttpGet]
@@ -53,6 +76,27 @@ namespace Yoga.Controllers
 			if (ModelState.IsValid)
 			{
 				await _addresses.UpdatePhysicalAddress(avm.Address);
+
+				var mailAddresses = await _addresses.GetAddressesByOwner(avm.Owner.Id);
+				if (avm.Address.IsPrimary)
+				{
+					foreach (var address in mailAddresses)
+					{
+						if (address.IsPrimary && address.Id != avm.Address.Id)
+						{
+							address.IsPrimary = false;
+							await _addresses.UpdatePhysicalAddress(address);
+						}
+					}
+				}
+				else
+				{
+					if (mailAddresses.Count() == 1 && mailAddresses.First().Id == avm.Address.Id)
+					{
+						avm.Address.IsPrimary = true;
+						await _addresses.UpdatePhysicalAddress(avm.Address);
+					}
+				}
 				return RedirectToAction("Details", "People", new { id = avm.Owner.Id });
 			}
 			return View(avm.Address);

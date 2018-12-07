@@ -13,6 +13,10 @@
 	<input type="hidden" asp-for="@Model.Address.DateAdded" />
 	<input type="hidden" asp-for="@Model.Owner.Id" />
 
+	<label asp-for="@Model.Address.Title"></label>
+	<input asp-for="@Model.Address.Title" />
+	<span asp-validation-for="@Model.Address.Title"></span>
+
 	<label asp-for="@Model.Address.StreetAddress"></label>
 	<input asp-for="@Model.Address.StreetAddress" />
 	<span asp-validation-for="@Model.Address.StreetAddress"></span>

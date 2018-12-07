@@ -15,6 +15,13 @@ namespace Yoga.Models.Interfaces
 		Task<IEnumerable<PhysicalAddress>> GetAddresses();
 
 		/// <summary>
+		/// Get list of Addresses by owner
+		/// </summary>
+		/// <param name="Id">owner Id</param>
+		/// <returns>List of addresses that belong to the person with given id</returns>
+		Task<IEnumerable<PhysicalAddress>> GetAddressesByOwner(int Id);
+
+		/// <summary>
 		/// Get single address by Id
 		/// </summary>
 		/// <returns>Single address</returns>

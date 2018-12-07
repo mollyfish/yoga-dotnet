@@ -26,6 +26,11 @@ namespace Yoga.Models.Services
 			return await _context.PhysicalAddresses.ToListAsync();
 		}
 
+		public async Task<IEnumerable<PhysicalAddress>> GetAddressesByOwner(int ownerId)
+		{
+			return await _context.PhysicalAddresses.Where(e => e.PersonId == ownerId).ToListAsync();
+		}
+
 		public async Task<AddressViewModel> GetPhysicalAddress(int id, int owner)
 		{
 			var address = await _context.PhysicalAddresses.FindAsync(id);
