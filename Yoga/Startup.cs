@@ -68,6 +68,7 @@ namespace Yoga
 			services.AddScoped<IVIP, VIPService>();
 			services.AddScoped<IPeople, PeopleService>();
 			services.AddScoped<IAddress, AddressService>();
+			services.AddScoped<IEmailAddress, EmailAddressService>();
 			services.AddScoped<IPhoneNumber, PhoneNumberService>();
 
 		}

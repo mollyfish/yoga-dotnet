@@ -14,6 +14,7 @@ namespace Yoga.Models
 		public DateTime DateAdded { get; set; }
 
 		public ICollection<PhysicalAddress> MailingAddresses { get; set; }
+		public ICollection<EmailAddress> EmailAddresses { get; set; }
 		public ICollection<PhoneNumber> PhoneNumbers { get; set; }
 		public ICollection<UserMailingList> MailingLists { get; set; }
 		public ICollection<Donation> Donations { get; set; }

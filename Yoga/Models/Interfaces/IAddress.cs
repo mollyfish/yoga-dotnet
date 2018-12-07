@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Yoga.Models.AddressViewModels;
 
 namespace Yoga.Models.Interfaces
 {
@@ -17,7 +18,7 @@ namespace Yoga.Models.Interfaces
 		/// Get single address by Id
 		/// </summary>
 		/// <returns>Single address</returns>
-		Task<PhysicalAddress> GetPhysicalAddress(int Id);
+		Task<AddressViewModel> GetPhysicalAddress(int Id, int owner);
 
 		/// <summary>
 		/// Get single address by title

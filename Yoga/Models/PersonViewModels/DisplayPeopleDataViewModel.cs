@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Yoga.Models.PersonViewModels
 {
-	public class DisplayPersonDataViewModel
+	public class DisplayPeopleDataViewModel
 	{
-		public Person person { get; set; }
+		public ICollection<Person> PeopleList { get; set; }
+		
 	}
 }

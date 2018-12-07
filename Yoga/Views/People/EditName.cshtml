@@ -1,0 +1,23 @@
+﻿@model Yoga.Models.Person
+
+@{
+	ViewData["Title"] = "Edit";
+}
+
+<h2>Edit Name</h2>
+
+<form asp-action="Edit">
+		<div asp-validation-summary="ModelOnly"></div>
+		<input type="hidden" asp-for="@Model.Id" />
+
+		<label asp-for="@Model.FirstName"></label>
+		<input asp-for="@Model.FirstName" />
+		<span asp-validation-for="@Model.FirstName"></span>
+
+		<label asp-for="@Model.LastName"></label>
+		<input asp-for="@Model.LastName" />
+		<span asp-validation-for="@Model.LastName"></span>
+		<input type="submit" value="Save" />
+	</form>
+
+<a asp-action="Details" asp-route-id="@Model.Id">Back to List</a>

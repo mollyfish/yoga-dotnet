@@ -1,0 +1,48 @@
+﻿@model Yoga.Models.AddressViewModels.AddAddressViewModel
+
+@{
+	ViewData["Title"] = "Add Address";
+}
+
+<h2>Add Address</h2>
+<h5>@Model.Owner.FirstName @Model.Owner.LastName</h5>
+
+<form asp-action="Create">
+	<div asp-validation-summary="ModelOnly"></div>
+
+	<label asp-for="@Model.newAddress.Title"></label>
+	<input asp-for="@Model.newAddress.Title" />
+	<span asp-validation-for="@Model.newAddress.Title"></span>
+
+	<label asp-for="@Model.newAddress.StreetAddress"></label>
+	<input asp-for="@Model.newAddress.StreetAddress" />
+	<span asp-validation-for="@Model.newAddress.StreetAddress"></span>
+
+	<label asp-for="@Model.newAddress.StreetAddressCont"></label>
+	<input asp-for="@Model.newAddress.StreetAddressCont" />
+	<span asp-validation-for="@Model.newAddress.StreetAddressCont"></span>
+
+	<label asp-for="@Model.newAddress.City"></label>
+	<input asp-for="@Model.newAddress.City" />
+	<span asp-validation-for="@Model.newAddress.City"></span>
+
+	<label asp-for="@Model.newAddress.State"></label>
+	<input asp-for="@Model.newAddress.State" />
+	<span asp-validation-for="@Model.newAddress.State"></span>
+
+	<label asp-for="@Model.newAddress.ZipCode"></label>
+	<input asp-for="@Model.newAddress.ZipCode" />
+	<span asp-validation-for="@Model.newAddress.ZipCode"></span>
+
+	<label asp-for="@Model.newAddress.IsPrimary"></label>
+	<input asp-for="@Model.newAddress.IsPrimary" />
+	<span asp-validation-for="@Model.newAddress.IsPrimary"></span>
+
+	<input type="hidden" asp-for="@Model.newAddress.PersonId" value="@Model.Owner.Id" />
+
+
+
+	<input type="submit" value="Add" />
+</form>
+
+<a asp-action="Index">Back to List</a>

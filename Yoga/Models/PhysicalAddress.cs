@@ -16,5 +16,6 @@ namespace Yoga.Models
 		public string State { get; set; }
 		public string ZipCode { get; set; }
 		public DateTime DateAdded { get; set; }
+		public bool IsPrimary { get; set; }
 	}
 }

@@ -27,7 +27,13 @@ namespace Yoga.Models.Services
 
 		public async Task<Person> GetPerson(int Id)
 		{
-			return await _context.People.FindAsync(Id);
+			var person = await _context.People.FindAsync(Id);
+			var emails = _context.EmailAddresses.Where(e => e.PersonId == person.Id).ToList();
+			person.EmailAddresses = emails;
+			var phoneNumbers = _context.PhoneNumbers.Where(p => p.PersonId == person.Id).ToList();
+			person.PhoneNumbers = phoneNumbers;
+			var mailingAddresses = _context.PhysicalAddresses.Where(a => a.PersonId == person.Id).ToList();
+			return person;
 		}
 
 		public async Task<Person> UpdatePerson(Person person)

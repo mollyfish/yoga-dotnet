@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Yoga.Models.PhoneViewModels;
 
 namespace Yoga.Models.Services
 {
@@ -25,9 +26,14 @@ namespace Yoga.Models.Services
 			return await _context.PhoneNumbers.ToListAsync();
 		}
 
-		public async Task<PhoneNumber> GetPhoneNumber(int Id)
+		public async Task<PhoneViewModel> GetPhoneNumber(int id, int owner)
 		{
-			return await _context.PhoneNumbers.FindAsync(Id);
+			var phone = await _context.PhoneNumbers.FindAsync(id);
+			var person = _context.People.Where(p => p.Id == owner).First();
+			PhoneViewModel phoneData = new PhoneViewModel();
+			phoneData.Phone = phone;
+			phoneData.Owner = person;
+			return phoneData;
 		}
 
 		public async Task<PhoneNumber> UpdatePhoneNumber(PhoneNumber phoneNumber)

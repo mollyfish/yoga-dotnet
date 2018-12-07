@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Yoga.Models.PhoneViewModels;
 
 namespace Yoga.Models.Interfaces
 {
@@ -17,7 +18,7 @@ namespace Yoga.Models.Interfaces
 		/// Get single phone number by Id
 		/// </summary>
 		/// <returns>Single phone number</returns>
-		Task<PhoneNumber> GetPhoneNumber(int Id);
+		Task<PhoneViewModel> GetPhoneNumber(int Id, int owner);
 
 		/// <summary>
 		/// Get single phoneNumber by title

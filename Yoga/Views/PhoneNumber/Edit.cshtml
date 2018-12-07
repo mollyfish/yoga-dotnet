@@ -1,0 +1,25 @@
+﻿@model Yoga.Models.PhoneViewModels.PhoneViewModel
+
+@{
+	ViewData["Title"] = "Edit";
+}
+<h2>Edit Phone Number</h2>
+<h4>@Model.Owner.FirstName @Model.Owner.LastName</h4>
+
+
+<form asp-action="Edit">
+	<input type="hidden" asp-for="@Model.Phone.Id" />
+	<input type="hidden" asp-for="@Model.Phone.PersonId" />
+	<input type="hidden" asp-for="@Model.Phone.DateAdded" />
+	<input type="hidden" asp-for="@Model.Owner.Id" />
+
+	<label asp-for="@Model.Phone.Phone"></label>
+	<input asp-for="@Model.Phone.Phone" />
+	<span asp-validation-for="@Model.Phone.Phone"></span>
+	<label asp-for="@Model.Phone.IsPrimary"></label>
+	<input asp-for="@Model.Phone.IsPrimary" />
+	<span asp-validation-for="@Model.Phone.IsPrimary"></span>
+	<input type="submit" value="Save" />
+</form>
+
+<a asp-controller="People" asp-action="Details" asp-route-id="@Model.Owner.Id">Back to Details</a>

@@ -27,6 +27,7 @@ namespace Yoga.Data
 			modelBuilder.Entity<MailingList>().ToTable("MailingList");
 			modelBuilder.Entity<PhoneNumber>().ToTable("PhoneNumber");
 			modelBuilder.Entity<PhysicalAddress>().ToTable("PhysicalAddress");
+			modelBuilder.Entity<EmailAddress>().ToTable("EmailAddress");
 			modelBuilder.Entity<Table>().ToTable("Table");
 			modelBuilder.Entity<VIP>().ToTable("VIP");
 
@@ -67,16 +68,19 @@ namespace Yoga.Data
 				new PhoneNumber
 				{
 					Id = 1,
+					PersonId = 1,
 					Phone = "1234567890"
 				},
 				new PhoneNumber
 				{
 					Id = 2,
+					PersonId = 2,
 					Phone = "1231231231"
 				},
 				new PhoneNumber
 				{
 					Id = 3,
+					PersonId = 3,
 					Phone = "1201201200"
 				}
 				);
@@ -254,6 +258,20 @@ namespace Yoga.Data
 					DonationType = DonationType.cash
 				}
 				);
+			modelBuilder.Entity<EmailAddress>().HasData(
+				new EmailAddress
+				{
+					Id = 1,
+					PersonId = 2,
+					Email = "dan@kentfamily.com"
+				},
+				new EmailAddress
+				{
+					Id = 2,
+					PersonId = 1,
+					Email = "peggy@kentfamily.com"
+				}
+				);
 
 		}
 
@@ -267,6 +285,7 @@ namespace Yoga.Data
 		public DbSet<MailingList> MailingLists { get; set; }
 		public DbSet<PhoneNumber> PhoneNumbers { get; set; }
 		public DbSet<PhysicalAddress> PhysicalAddresses { get; set; }
+		public DbSet<EmailAddress> EmailAddresses { get; set; }
 		public DbSet<Table> Tables { get; set; }
 		public DbSet<EventMailingList> EventMailingLists { get; set; }
 		public DbSet<UserMailingList> UserMailingLists { get; set; }

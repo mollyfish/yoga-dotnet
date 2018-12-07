@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Yoga.Models
 {
-	public class CreatePersonViewModel
+	public class EditPersonViewModel
 	{
+		public int Id { get; set; }
 		[Required]
 		public string FirstName { get; set; }
 		[Required]

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Yoga.Models.AddressViewModels;
 
 namespace Yoga.Models.Services
 {
@@ -25,9 +26,14 @@ namespace Yoga.Models.Services
 			return await _context.PhysicalAddresses.ToListAsync();
 		}
 
-		public async Task<PhysicalAddress> GetPhysicalAddress(int Id)
+		public async Task<AddressViewModel> GetPhysicalAddress(int id, int owner)
 		{
-			return await _context.PhysicalAddresses.FindAsync(Id);
+			var address = await _context.PhysicalAddresses.FindAsync(id);
+			var person = _context.People.Where(p => p.Id == owner).First();
+			AddressViewModel addressData = new AddressViewModel();
+			addressData.Address = address;
+			addressData.Owner = person;
+			return addressData;
 		}
 
 		public async Task<PhysicalAddress> UpdatePhysicalAddress(PhysicalAddress address)

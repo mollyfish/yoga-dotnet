@@ -17,48 +17,24 @@ namespace Yoga.Controllers
 		private readonly IPeople _people;
 		private readonly IAddress _addresses;
 		private readonly IPhoneNumber _phoneNumbers;
+		private readonly IEmailAddress _emailAddresses;
 
 		public PeopleController(
 			IPeople people, 
 			IAddress addresses,
-			IPhoneNumber phoneNumbers)
+			IPhoneNumber phoneNumbers,
+			IEmailAddress emailAddresses)
 		{
 			_people = people;
 			_addresses = addresses;
 			_phoneNumbers = phoneNumbers;
+			_emailAddresses = emailAddresses;
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			DisplayPersonDataViewModel model = new DisplayPersonDataViewModel();
-			model.PeopleList = new List<Person>();
-			var people = await _people.GetPeople();
-			var addresses = await _addresses.GetAddresses();
-			var phones = await _phoneNumbers.GetPhoneNumbers();
-			foreach (var person in people)
-			{
-				List<PhysicalAddress> mailingAddresses = new List<PhysicalAddress>();
-				List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
-				foreach (var address in addresses)
-				{
-					if (address.PersonId == person.Id)
-					{
-						mailingAddresses.Add(address);
-					}
-				}
-				person.MailingAddresses = mailingAddresses;
-				foreach (var phone in phones)
-				{
-					if (phone.PersonId == person.Id)
-					{
-						phoneNumbers.Add(phone);
-					}
-				}
-				person.PhoneNumbers = phoneNumbers;
-				model.PeopleList.Add(person);
-			}
-			
+			DisplayPeopleDataViewModel model = await packPeopleData();
 			return View(model);
 		}
 
@@ -99,9 +75,128 @@ namespace Yoga.Controllers
 				phone.DateAdded = DateTime.Now;
 				await _phoneNumbers.CreatePhoneNumber(phone);
 
+				EmailAddress email = new EmailAddress();
+				email.Email = model.Email;
+				email.PersonId = newPerson.Id;
+				email.DateAdded = DateTime.Now;
+				await _emailAddresses.CreateEmailAddress(email);
+
 				return RedirectToAction(nameof(Index));
 			}
 			return View(model);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Details(int Id)
+		{
+			DisplayPersonDataViewModel model = await packPersonData(Id);
+			return View(model);
+		}
+
+	
+
+		[HttpGet]
+		public async Task<IActionResult> EditName(int id)
+		{
+			var person = await _people.GetPerson(id);
+			return View(person);
+		}
+
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int Id, [Bind("Id,FirstName,LastName")] Person person)
+		{
+			if (ModelState.IsValid)
+			{
+				await _people.UpdatePerson(person);
+				// make Person Updates
+				return RedirectToAction("Details", new { id = person.Id });
+			}
+				return View(person);
+		}
+
+		private async Task<DisplayPeopleDataViewModel> packPeopleData()
+		{
+			DisplayPeopleDataViewModel model = new DisplayPeopleDataViewModel();
+			model.PeopleList = new List<Person>();
+			var people = await _people.GetPeople();
+			var addresses = await _addresses.GetAddresses();
+			var phones = await _phoneNumbers.GetPhoneNumbers();
+			var emails = await _emailAddresses.GetEmailAddresses();
+			foreach (var person in people)
+			{
+				List<PhysicalAddress> mailingAddresses = new List<PhysicalAddress>();
+				List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
+				List<EmailAddress> emailAddresses = new List<EmailAddress>();
+				foreach (var address in addresses)
+				{
+					if (address.PersonId == person.Id)
+					{
+						mailingAddresses.Add(address);
+					}
+				}
+				person.MailingAddresses = mailingAddresses;
+				foreach (var phone in phones)
+				{
+					if (phone.PersonId == person.Id)
+					{
+						phoneNumbers.Add(phone);
+					}
+				}
+				person.PhoneNumbers = phoneNumbers;
+				foreach (var item in emails)
+				{
+					if (item.PersonId == person.Id)
+					{
+						emailAddresses.Add(item);
+					}
+				}
+				person.EmailAddresses = emailAddresses;
+				model.PeopleList.Add(person);
+			}
+			return model;
+		}
+
+		private async Task<DisplayPersonDataViewModel> packPersonData(int Id)
+		{
+			DisplayPersonDataViewModel model = new DisplayPersonDataViewModel();
+			model.person = new Person();
+			var person = await _people.GetPerson(Id);
+			var addresses = await _addresses.GetAddresses();
+			var phones = await _phoneNumbers.GetPhoneNumbers();
+			var emails = await _emailAddresses.GetEmailAddresses();
+			
+				List<PhysicalAddress> mailingAddresses = new List<PhysicalAddress>();
+				List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
+				List<EmailAddress> emailAddresses = new List<EmailAddress>();
+				foreach (var address in addresses)
+				{
+					if (address.PersonId == person.Id)
+					{
+						mailingAddresses.Add(address);
+					}
+				}
+				person.MailingAddresses = mailingAddresses;
+				foreach (var phone in phones)
+				{
+					if (phone.PersonId == person.Id)
+					{
+						phoneNumbers.Add(phone);
+					}
+				}
+				person.PhoneNumbers = phoneNumbers;
+				foreach (var item in emails)
+				{
+					if (item.PersonId == person.Id)
+					{
+						emailAddresses.Add(item);
+					}
+				}
+				person.EmailAddresses = emailAddresses;
+				model.person = person;
+			
+			return model;
 		}
 	}
 }

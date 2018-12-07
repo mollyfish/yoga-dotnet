@@ -1,4 +1,4 @@
-﻿@model Yoga.Models.PersonViewModels.DisplayPersonDataViewModel
+﻿@model Yoga.Models.PersonViewModels.DisplayPeopleDataViewModel
 
 
 @{
@@ -11,7 +11,7 @@
 <ul>
 	@foreach (var person in Model.PeopleList)
 	{
-		<li>@person.FirstName @person.LastName <a asp-route-id="@person.Id" asp-action="Edit">Edit</a></li>
+		<li>@person.FirstName @person.LastName <a asp-route-id="@person.Id" asp-action="Details">Details</a></li>
 		@foreach (var address in person.MailingAddresses)
 		{
 			<li>@address.StreetAddress
@@ -22,6 +22,10 @@
 		@foreach (var phone in person.PhoneNumbers)
 		{
 			<li>@phone.Phone</li>
+		}
+		@foreach (var email in person.EmailAddresses)
+		{
+			<li>@email.Email</li>
 		}
 	}
 </ul>
