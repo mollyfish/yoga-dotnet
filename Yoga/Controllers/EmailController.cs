@@ -34,8 +34,27 @@ namespace Yoga.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Create(int Id)
 		{
-			var owner = await _people.GetPerson(Id);
-			return View(owner);
+			AddEmailViewModel model = new AddEmailViewModel();
+			model.Owner = await _people.GetPerson(Id);
+			return View(model);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(int id, [Bind("Id,newEmail,Owner")] AddEmailViewModel evm)
+		{
+			if (ModelState.IsValid)
+			{
+				evm.newEmail.DateAdded = DateTime.Now;
+				var emailAddresses = await _emailAddresses.GetEmailAddressesByOwner(evm.Owner.Id);
+				if (emailAddresses.Count() == 0)
+				{
+					evm.newEmail.IsPrimary = true;
+				}
+				await _emailAddresses.CreateEmailAddress(evm.newEmail);
+				return RedirectToAction("Details", "People", new { id = evm.Owner.Id });
+			}
+			return View(evm);
 		}
 
 		[HttpGet]
@@ -49,12 +68,54 @@ namespace Yoga.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Owner")] EmailViewModel evm)
 		{
+			//if (ModelState.IsValid)
+			//{
+			//	var emailAddresses = await _emailAddresses.GetEmailAddressesByOwner(evm.Owner.Id);
+			//	if (evm.Email.IsPrimary)
+			//	{
+			//		foreach (var email in emailAddresses)
+			//		{
+			//			if (email.IsPrimary && email.Id != evm.Email.Id)
+			//			{
+			//				email.IsPrimary = false;
+			//				await _emailAddresses.UpdateEmailAddress(email);
+			//			}
+			//		}
+			//	} else
+			//	{
+			//		if (emailAddresses.Count() == 1 && emailAddresses.First().Id == evm.Email.Id)
+			//		{
+			//			evm.Email.IsPrimary = true;
+			//		}
+			//	}
+			//}
 			if (ModelState.IsValid)
 			{
 				await _emailAddresses.UpdateEmailAddress(evm.Email);
-				return RedirectToAction("Details", "People", new { id = evm.Owner.Id });
 			}
-			return View(evm.Email);
+			var emailAddresses = await _emailAddresses.GetEmailAddressesByOwner(evm.Owner.Id);
+			if (evm.Email.IsPrimary)
+			{
+				foreach (var email in emailAddresses)
+				{
+					if (email.IsPrimary && email.Id != evm.Email.Id)
+					{
+						email.IsPrimary = false;
+						await _emailAddresses.UpdateEmailAddress(email);
+					}
+				}
+			}
+			else
+			{
+				if (emailAddresses.Count() == 1 && emailAddresses.First().Id == evm.Email.Id)
+				{
+					evm.Email.IsPrimary = true;
+					await _emailAddresses.UpdateEmailAddress(evm.Email);
+				}
+			}
+			return RedirectToAction("Details", "People", new { id = evm.Owner.Id });
+
+			//return View(evm.Email);
 		}
 
 	}

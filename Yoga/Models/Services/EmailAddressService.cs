@@ -26,6 +26,13 @@ namespace Yoga.Models.Services
 			return await _context.EmailAddresses.ToListAsync();
 		}
 
+		public async Task<IEnumerable<EmailAddress>> GetEmailAddressesByOwner(int ownerId)
+		{
+			return await _context.EmailAddresses.Where(e => e.PersonId == ownerId).ToListAsync();
+		}
+
+
+
 		public async Task<EmailViewModel> GetEmailAddress(int Id)
 		{
 			var email = await _context.EmailAddresses.FindAsync(Id);

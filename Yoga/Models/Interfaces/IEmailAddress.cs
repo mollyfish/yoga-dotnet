@@ -15,6 +15,13 @@ namespace Yoga.Models.Interfaces
 		Task<IEnumerable<EmailAddress>> GetEmailAddresses();
 
 		/// <summary>
+		/// Get list of emailAddresses by owner
+		/// </summary>
+		/// <param name="Id">owner Id</param>
+		/// <returns>List of email addresses that belong to the person with given id</returns>
+		Task<IEnumerable<EmailAddress>> GetEmailAddressesByOwner(int Id);
+
+		/// <summary>
 		/// Get single emailAddress by Id
 		/// </summary>
 		/// <returns>Single emailAddress</returns>

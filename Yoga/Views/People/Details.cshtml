@@ -12,7 +12,7 @@
 <h5>Email Addresses</h5>
 @if (Model.person.EmailAddresses.Count == 0)
 {
-	<a asp-action="CreateEmail" asp-route-id="@Model.person.Id">Add Email</a>
+	<a asp-controller="Email" asp-action="Create" asp-route-id="@Model.person.Id">Add Email</a>
 }
 else
 {
