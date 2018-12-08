@@ -10,6 +10,9 @@
 <form asp-action="Create">
 	<input type="hidden" asp-for="@Model.newEmail.PersonId" value="@Model.Owner.Id" />
 	<input type="hidden" asp-for="@Model.Owner.Id" />
+	<input type="hidden" asp-for="@Model.Owner.FirstName" />
+	<input type="hidden" asp-for="@Model.Owner.LastName" />
+	<input type="hidden" asp-for="@Model.Owner.FullName" />
 
 	<label asp-for="@Model.newEmail.Email"></label>
 	<input asp-for="@Model.newEmail.Email" />

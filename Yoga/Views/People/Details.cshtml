@@ -6,7 +6,76 @@
 
 <h2>Details</h2>
 
-<h5>Name</h5>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Email Addresses</th>
+			<th>Phone Numbers</th>
+			<th>Mailing Addresses</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@Model.person.FirstName @Model.person.LastName (<a asp-action="EditName" asp-route-id="@Model.person.Id">edit</a>)</td>
+			<td>
+				<ul>
+					@foreach (var email in Model.person.EmailAddresses)
+					{
+						<li>
+							@if (email.IsPrimary)
+							{
+								<p>*</p>
+							}
+							@email.Email (<a asp-controller="Email" asp-action="Edit" asp-route-id="@email.Id">edit</a>)
+						</li>
+					}
+					<li><a asp-controller="Email" asp-action="Create" asp-route-id="@Model.person.Id">Add new email</a></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					@foreach (var phone in Model.person.PhoneNumbers)
+					{
+						<li>
+							@if (phone.IsPrimary)
+							{
+								<p>*</p>
+							}
+							@phone.Phone (<a asp-controller="PhoneNumber" asp-action="Edit" asp-route-id="@phone.Id" asp-route-owner="@Model.person.Id">edit</a>)
+						</li>
+					}
+					<li><a asp-controller="PhoneNumber" asp-action="Create" asp-route-id="@Model.person.Id">Add new phone number</a></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					@foreach (var address in Model.person.MailingAddresses)
+					{
+						<li>
+							@if (address.IsPrimary)
+							{
+								<p>*</p>
+							}
+							<address>
+								<span>@address.Title</span>
+								<span>@address.StreetAddress</span>
+								<span>@address.StreetAddressCont</span>
+								<span>@address.City, @address.State @address.ZipCode</span>
+							</address>
+							(<a asp-controller="Address" asp-action="Edit" asp-route-id="@address.Id" asp-route-owner="@Model.person.Id">edit)</a>
+						</li>
+					}
+					<li><a asp-controller="Address" asp-action="Create" asp-route-id="@Model.person.Id">Add new address</a></li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+@*<h5>Name</h5>
 <p>@Model.person.FirstName @Model.person.LastName</p> <a asp-action="EditName" asp-route-id="@Model.person.Id">Edit</a>
 
 <h5>Email Addresses</h5>
@@ -59,7 +128,7 @@
 		</li>
 	}
 </ul>
-<a asp-controller="PhoneNumber" asp-action="Create" asp-route-id="@Model.person.Id">Add new phone number</a>
+<a asp-controller="PhoneNumber" asp-action="Create" asp-route-id="@Model.person.Id">Add new phone number</a>*@
 
 
 

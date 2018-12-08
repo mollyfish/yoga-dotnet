@@ -67,18 +67,21 @@ namespace Yoga.Controllers
 				address.ZipCode = model.ZipCode;
 				address.PersonId = newPerson.Id;
 				address.DateAdded = DateTime.Now;
+				address.IsPrimary = true;
 				await _addresses.CreatePhysicalAddress(address);
 
 				PhoneNumber phone = new PhoneNumber();
 				phone.Phone = model.PhoneNumber;
 				phone.PersonId = newPerson.Id;
 				phone.DateAdded = DateTime.Now;
+				phone.IsPrimary = true;
 				await _phoneNumbers.CreatePhoneNumber(phone);
 
 				EmailAddress email = new EmailAddress();
 				email.Email = model.Email;
 				email.PersonId = newPerson.Id;
 				email.DateAdded = DateTime.Now;
+				email.IsPrimary = true;
 				await _emailAddresses.CreateEmailAddress(email);
 
 				return RedirectToAction(nameof(Index));

@@ -10,7 +10,8 @@ namespace Yoga.Models
 	{
 		public int Id { get; set; }
 		public int PersonId { get; set; }
-		[EmailAddress]
+		[EmailAddress(ErrorMessage = "Incorrect format")]
+		[Required(ErrorMessage = "Email Address is required")]
 		public string Email { get; set; }
 		public DateTime DateAdded { get; set; }
 		public bool IsPrimary { get; set; }
