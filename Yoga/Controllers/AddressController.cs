@@ -89,7 +89,7 @@ namespace Yoga.Controllers
 				}
 				return RedirectToAction("Details", "People", new { id = avm.Owner.Id });
 			}
-			return View(avm.Address);
+			return View(avm);
 		}
 
 	}

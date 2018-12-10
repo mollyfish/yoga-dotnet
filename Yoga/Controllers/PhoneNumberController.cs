@@ -88,7 +88,7 @@ namespace Yoga.Controllers
 				}
 				return RedirectToAction("Details", "People", new { id = phvm.Owner.Id });
 			}
-			return View(phvm.Phone);
+			return View(phvm);
 		}
 
 	}

@@ -8,26 +8,55 @@
 <h1>Comeback People</h1>
 
 <h3>Everyone!</h3>
-<ul>
-	@foreach (var person in Model.PeopleList)
-	{
-		<li>@person.FirstName @person.LastName <a asp-route-id="@person.Id" asp-action="Details">Details</a></li>
-		@foreach (var address in person.MailingAddresses)
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Primary Email</th>
+			<th>Primary Phone</th>
+			<th>Primary Address</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var person in Model.PeopleList)
 		{
-			<li>@address.StreetAddress
-				@if (address.StreetAddressCont != null) {<br />@address.StreetAddressCont}
-				<br />@address.City, @address.State @address.ZipCode
-			</li>
+		<tr>
+
+			<td>@person.FirstName @person.LastName</td>
+			@foreach (var email in person.EmailAddresses)
+			{
+				@if (email.IsPrimary)
+				{
+
+					<td>@email.Email</td>
+				}
+			}
+
+			@foreach (var phone in person.PhoneNumbers)
+			{
+				@if (phone.IsPrimary)
+				{
+					<td>@phone.Phone</td>
+				}
+			}
+			@foreach (var address in person.MailingAddresses)
+			{
+				@if (address.IsPrimary)
+				{
+					<td>
+						@address.StreetAddress
+						@if (address.StreetAddressCont != null)
+						{<br />@address.StreetAddressCont}
+						<br />@address.City, @address.State @address.ZipCode
+					</td>
+				}
+			}
+			<td><a asp-route-id="@person.Id" asp-action="Details">details</a></td>
+		</tr>
 		}
-		@foreach (var phone in person.PhoneNumbers)
-		{
-			<li>@phone.Phone</li>
-		}
-		@foreach (var email in person.EmailAddresses)
-		{
-			<li>@email.Email</li>
-		}
-	}
-</ul>
+	</tbody>
+</table>
 <a asp-action="Create">Add someone</a>
 

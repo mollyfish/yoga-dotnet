@@ -46,21 +46,24 @@ namespace Yoga.Data
 					Id = 1,
 					FirstName = "Peggy",
 					LastName = "Kent",
-					FullName = "Peggy Kent"
+					FullName = "Peggy Kent",
+					DateAdded = DateTime.Parse("3/24/12")
 				},
 				new Person
 				{
 					Id = 2,
 					FirstName = "Dan",
 					LastName = "Kent",
-					FullName = "Dan Kent"
+					FullName = "Dan Kent",
+					DateAdded = DateTime.Parse("5/22/18")
 				},
 				new Person
 				{
 					Id = 3,
 					FirstName = "Fred",
 					LastName = "Harder",
-					FullName = "Fred Harder"
+					FullName = "Fred Harder",
+					DateAdded = DateTime.Parse("9/1/92")
 				}
 				);
 
@@ -69,19 +72,25 @@ namespace Yoga.Data
 				{
 					Id = 1,
 					PersonId = 1,
-					Phone = "1234567890"
+					Phone = "1234567890",
+					DateAdded = DateTime.Parse("7/12/13"),
+					IsPrimary = true
 				},
 				new PhoneNumber
 				{
 					Id = 2,
 					PersonId = 2,
-					Phone = "1231231231"
+					Phone = "1231231231",
+					DateAdded = DateTime.Parse("6/30/16"),
+					IsPrimary = true
 				},
 				new PhoneNumber
 				{
 					Id = 3,
 					PersonId = 3,
-					Phone = "1201201200"
+					Phone = "1201201200",
+					DateAdded = DateTime.Parse("3/17/00"),
+					IsPrimary = true
 				}
 				);
 
@@ -116,6 +125,7 @@ namespace Yoga.Data
 					State = "WA",
 					StreetAddress = "123 West Mercer Way",
 					ZipCode = "13345",
+					DateAdded = DateTime.Parse("4/13/12")
 				},
 				new PhysicalAddress
 				{
@@ -126,6 +136,8 @@ namespace Yoga.Data
 					StreetAddress = "123 Water Avenue",
 					StreetAddressCont = "#430",
 					ZipCode = "12321",
+					DateAdded = DateTime.Parse("1/23/13"),
+					IsPrimary = true
 				},
 				new PhysicalAddress
 				{
@@ -135,6 +147,8 @@ namespace Yoga.Data
 					State = "CO",
 					StreetAddress = "123 Market St",
 					ZipCode = "12459",
+					DateAdded = DateTime.Parse("8/15/17"),
+					IsPrimary = true
 				},
 				new PhysicalAddress
 				{
@@ -144,6 +158,7 @@ namespace Yoga.Data
 					State = "WA",
 					StreetAddress = "12345 134th Ave SE",
 					ZipCode = "12045",
+					DateAdded = DateTime.Parse("9/2/16")
 				},
 				new PhysicalAddress
 				{
@@ -154,6 +169,8 @@ namespace Yoga.Data
 					StreetAddress = "1231 Pierce St",
 					StreetAddressCont = "Unit A",
 					ZipCode = "13335",
+					DateAdded = DateTime.Parse("11/11/11"),
+					IsPrimary	= true
 				},
 				new PhysicalAddress
 				{
@@ -163,6 +180,7 @@ namespace Yoga.Data
 					StreetAddress = "123 Main St",
 					StreetAddressCont = "STE 100",
 					ZipCode = "12345",
+					DateAdded = DateTime.Parse("4/10/99")
 				}
 				);
 			modelBuilder.Entity<Event>().HasData(
@@ -263,13 +281,17 @@ namespace Yoga.Data
 				{
 					Id = 1,
 					PersonId = 2,
-					Email = "dan@kentfamily.com"
+					Email = "dan@kentfamily.com",
+					DateAdded = DateTime.Parse("8/5/19"),
+					IsPrimary = true
 				},
 				new EmailAddress
 				{
 					Id = 2,
 					PersonId = 1,
-					Email = "peggy@kentfamily.com"
+					Email = "peggy@kentfamily.com",
+					DateAdded = DateTime.Parse("5/15/12"),
+					IsPrimary = true
 				}
 				);
 
