@@ -48,6 +48,40 @@ nav ul li {
 	float: right;
 }
 
+table {
+	outline: 1px solid #000;
+}
+
+thead{
+	border-bottom: 3px solid gray;
+}
+
+tr {
+	border-top: 1px solid gray;
+}
+
+tr:first-child {
+	border-top: none;
+}
+
+th, td {
+	padding: 0.5em;
+	border-left: 1px solid #d8d8d8;
+}
+
+table li {
+	border-top: 1px solid #d8d8d8;
+	padding: 0.5em 0;
+}
+
+table li:first-child {
+	border-top: none;
+}
+
+table li:last-child {
+	margin-top: 1em;
+}
+
 footer {
 	text-align: center;
 	background-color: gray;

@@ -1,20 +1,20 @@
-﻿@model Yoga.Models.PersonViewModels.AddressViewModels.AddAddressViewModel
+﻿@model Yoga.Models.EventViewModels.TableViewModels.AddTableViewModel
 
 @{
-	ViewData["Title"] = "Add Address";
+	ViewData["Title"] = "Add Table";
 }
 
-<h2>Add Address</h2>
-<h5>@Model.Owner.FirstName @Model.Owner.LastName</h5>
+<h2>Add Table</h2>
+<h5>@Model.newTable.EventId</h5>
 
 <form asp-action="Create">
 	<div asp-validation-summary="ModelOnly"></div>
-	<input type="hidden" asp-for="@Model.Owner.Id" />
+	@*<input type="hidden" asp-for="@Model.Owner.Id" />
 	<input type="hidden" asp-for="@Model.Owner.FirstName" />
 	<input type="hidden" asp-for="@Model.Owner.LastName" />
-	<input type="hidden" asp-for="@Model.Owner.FullName" />
+	<input type="hidden" asp-for="@Model.Owner.FullName" />*@
 
-	<label asp-for="@Model.newAddress.Title"></label>
+	@*<label asp-for="@Model.newAddress.Title"></label>
 	<input asp-for="@Model.newAddress.Title" />
 	<span asp-validation-for="@Model.newAddress.Title"></span>
 
@@ -42,11 +42,11 @@
 	<input asp-for="@Model.newAddress.IsPrimary" />
 	<span asp-validation-for="@Model.newAddress.IsPrimary"></span>
 
-	<input type="hidden" asp-for="@Model.newAddress.PersonId" value="@Model.Owner.Id" />
+	<input type="hidden" asp-for="@Model.newAddress.PersonId" value="@Model.Owner.Id" />*@
 
 
 
 	<input type="submit" value="Add" />
 </form>
 
-<a asp-controller="People" asp-action="Details" asp-route-id="@Model.Owner.Id">Back to Details</a>
+<a asp-controller="Events" asp-action="Details" asp-route-id="@Model.newTable.EventId">Back to Details</a>

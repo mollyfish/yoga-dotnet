@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Yoga.Models.EmailViewModels
+namespace Yoga.Models.PersonViewModels.AddressViewModels
 {
-    public class EmailViewModel
-    {
-		public EmailAddress Email { get; set; }
+	public class AddAddressViewModel
+	{
 		public Person Owner { get; set; }
+		public PhysicalAddress newAddress { get; set; }
 	}
 }

@@ -1,0 +1,34 @@
+﻿@model Yoga.Models.PersonViewModels.DonationViewModels.DonationViewModel
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h2>Donation Details</h2>
+<h5>@Model.Donor.FullName</h5>
+
+<table>
+	<thead>
+		<tr>
+			<th>ID#</th>
+			<th>Amount</th>
+			<th>Date</th>
+			<th>Method</th>
+			<th>Donor Display Name</th>
+		</tr>
+	</thead>
+	<tbody>
+
+
+		<tr>
+			<td>@Model.Donation.Id</td>
+			<td>@Model.Donation.Amount</td>
+			<td>@Model.Donation.Date</td>
+			<td>@Model.Donation.DonationType</td>
+			<td>@Model.Donation.DonorDisplayName</td>
+		</tr>
+
+	</tbody>
+</table>
+@*<a asp-action="Edit" asp-route-id="@Model.Event.Id"></a>*@
+<a asp-controller="People" asp-action="Details" asp-route-id="@Model.Donor.Id">Back to Donor details</a>

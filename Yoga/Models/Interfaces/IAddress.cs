@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Yoga.Models.AddressViewModels;
+using Yoga.Models.PersonViewModels.AddressViewModels;
 
 namespace Yoga.Models.Interfaces
 {
@@ -13,6 +13,13 @@ namespace Yoga.Models.Interfaces
 		/// </summary>
 		/// <returns>List of addresses</returns>
 		Task<IEnumerable<PhysicalAddress>> GetAddresses();
+
+		/// <summary>
+		/// get a single address by id
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns>a single address</returns>
+		Task<PhysicalAddress> GetAddress(int id);
 
 		/// <summary>
 		/// Get list of Addresses by owner

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Yoga.Models.PhoneViewModels;
+using Yoga.Models.PersonViewModels.PhoneViewModels;
 
 namespace Yoga.Models.Interfaces
 {

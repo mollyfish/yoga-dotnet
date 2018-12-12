@@ -1,0 +1,49 @@
+﻿@model Yoga.Models.EventViewModels.DisplayEventDataViewModel
+
+@{
+	ViewData["Title"] = "Edit";
+}
+
+<h2>Edit Event</h2>
+
+<form asp-action="Edit">
+	<div asp-validation-summary="ModelOnly"></div>
+	<input type="hidden" asp-for="@Model.Event.Id" />
+	<input type="hidden" asp-for="@Model.Event.LocationId" />
+	<input type="hidden" asp-for="@Model.Event.Tables" />
+	<input type="hidden" asp-for="@Model.Event.Guests" />
+
+	<label asp-for="@Model.Event.Title"></label>
+	<input asp-for="@Model.Event.Title" />
+	<span asp-validation-for="@Model.Event.Title"></span>
+
+	<label asp-for="@Model.Event.Date"></label>
+	<input asp-for="@Model.Event.Date" />
+	<span asp-validation-for="@Model.Event.Date"></span>
+
+	<label asp-for="@Model.Event.LocationId"></label>
+	<input asp-for="@Model.Event.LocationId" />
+	<span asp-validation-for="@Model.Event.LocationId"></span>
+
+	<label asp-for="@Model.Event.HostId"></label>
+	<input asp-for="@Model.Event.HostId" />
+	<span asp-validation-for="@Model.Event.HostId"></span>
+
+	@if (@Model.Event.Tables != null) {
+	@foreach (var table in Model.Event.Tables)
+	{
+		<label asp-for="@table"></label>
+		<input asp-for="@table" />
+		<span asp-validation-for="@table"></span>
+	}
+	} else
+	{
+		<a asp-controller="Tables" asp-action="Create" asp-route-id="@Model.Event.Id">Add a table</a>
+	}
+
+
+
+	<input type="submit" value="Save" />
+</form>
+
+<a asp-action="Details" asp-route-id="@Model.Event.Id">Back to Details</a>

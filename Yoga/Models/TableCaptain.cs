@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace Yoga.Models
 {
-	public class AttendeeTable
+	public class TableCaptain
 	{
-		public string UserId { get; set; }
 		public int TableId { get; set; }
-		public int EventId { get; set; }
+		public int PersonId { get; set; }
 	}
 }

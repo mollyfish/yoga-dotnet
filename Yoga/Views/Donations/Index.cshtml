@@ -1,0 +1,41 @@
+﻿@model Yoga.Models.PersonViewModels.DonationViewModels.DisplayDonationsViewModel
+
+
+@{
+	ViewData["Title"] = "Donations";
+}
+
+<h1>Comeback Donations</h1>
+
+
+<table>
+	<thead>
+		<tr>
+			<th>Id#</th>
+			<th>Donor</th>
+			<th>Amount</th>
+			<th>Date</th>
+			<th>Method</th>
+			<th>Event</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var donation in Model.DonationList)
+		{
+		<tr>
+
+			<td>@donation.Id</td>
+			<td>@donation.DonorDisplayName</td>
+			<td>@donation.Amount</td>
+			<td>@donation.Date</td>
+			<td>@donation.DonationType</td>
+			<td>@donation.EventId</td>
+
+			<td><a asp-route-id="@donation.Id" asp-action="Details">details</a></td>
+		</tr>
+		}
+	</tbody>
+</table>
+<a asp-action="Create">Add someone</a>
+

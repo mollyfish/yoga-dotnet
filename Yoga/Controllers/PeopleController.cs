@@ -18,17 +18,20 @@ namespace Yoga.Controllers
 		private readonly IAddress _addresses;
 		private readonly IPhoneNumber _phoneNumbers;
 		private readonly IEmailAddress _emailAddresses;
+		private readonly IDonation _donations;
 
 		public PeopleController(
-			IPeople people, 
+			IPeople people,
 			IAddress addresses,
 			IPhoneNumber phoneNumbers,
-			IEmailAddress emailAddresses)
+			IEmailAddress emailAddresses,
+			IDonation donations)
 		{
 			_people = people;
 			_addresses = addresses;
 			_phoneNumbers = phoneNumbers;
 			_emailAddresses = emailAddresses;
+			_donations = donations;
 		}
 
 		[HttpGet]
@@ -96,7 +99,7 @@ namespace Yoga.Controllers
 			return View(model);
 		}
 
-	
+
 
 		[HttpGet]
 		public async Task<IActionResult> EditName(int id)
@@ -116,7 +119,7 @@ namespace Yoga.Controllers
 				// make Person Updates
 				return RedirectToAction("Details", new { id = person.Id });
 			}
-				return View(person);
+			return View(person);
 		}
 
 		private async Task<DisplayPeopleDataViewModel> packPeopleData()
@@ -169,36 +172,47 @@ namespace Yoga.Controllers
 			var addresses = await _addresses.GetAddresses();
 			var phones = await _phoneNumbers.GetPhoneNumbers();
 			var emails = await _emailAddresses.GetEmailAddresses();
-			
-				List<PhysicalAddress> mailingAddresses = new List<PhysicalAddress>();
-				List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
-				List<EmailAddress> emailAddresses = new List<EmailAddress>();
-				foreach (var address in addresses)
+			var donations = await _donations.GetDonations();
+
+			List<PhysicalAddress> mailingAddresses = new List<PhysicalAddress>();
+			List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
+			List<EmailAddress> emailAddresses = new List<EmailAddress>();
+			List<Donation> personDonations = new List<Donation>();
+
+			foreach (var address in addresses)
+			{
+				if (address.PersonId == person.Id)
 				{
-					if (address.PersonId == person.Id)
-					{
-						mailingAddresses.Add(address);
-					}
+					mailingAddresses.Add(address);
 				}
-				person.MailingAddresses = mailingAddresses;
-				foreach (var phone in phones)
+			}
+			person.MailingAddresses = mailingAddresses;
+			foreach (var donation in donations)
+			{
+				if (donation.DonorId == person.Id)
 				{
-					if (phone.PersonId == person.Id)
-					{
-						phoneNumbers.Add(phone);
-					}
+					personDonations.Add(donation);
 				}
-				person.PhoneNumbers = phoneNumbers;
-				foreach (var item in emails)
+			}
+			person.Donations = personDonations;
+			foreach (var phone in phones)
+			{
+				if (phone.PersonId == person.Id)
 				{
-					if (item.PersonId == person.Id)
-					{
-						emailAddresses.Add(item);
-					}
+					phoneNumbers.Add(phone);
 				}
-				person.EmailAddresses = emailAddresses;
-				model.person = person;
-			
+			}
+			person.PhoneNumbers = phoneNumbers;
+			foreach (var item in emails)
+			{
+				if (item.PersonId == person.Id)
+				{
+					emailAddresses.Add(item);
+				}
+			}
+			person.EmailAddresses = emailAddresses;
+			model.person = person;
+
 			return model;
 		}
 	}
