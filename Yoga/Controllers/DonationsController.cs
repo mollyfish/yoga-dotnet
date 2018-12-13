@@ -35,9 +35,13 @@ namespace Yoga.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string sort)
 		{
-			var donations = await _donations.GetDonationsForDisplay();
+			string sortOrder = sort;
+			string searchString = "";
+			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name" : "name_desc";
+			ViewBag.DateSortParam = sortOrder == "Date" ? "date_asc" : "Date";
+			var donations = await _donations.GetDonationsForDisplay(sortOrder, searchString);
 			FilterableDonationViewModel fdvm = new FilterableDonationViewModel();
 			fdvm.ListOfDvms = donations;
 			return View(fdvm);
@@ -49,8 +53,8 @@ namespace Yoga.Controllers
 		{
 			string sortOrder = fdvm.sortOrder;
 			string searchString = fdvm.searchString;
-			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-			ViewBag.DateSortParam = sortOrder == "Date" ? "date_desc" : "Date";
+			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name" : "name_desc";
+			ViewBag.DateSortParam = sortOrder == "Date" ? "date_asc" : "Date";
 			var donations = await _donations.GetDonationsForDisplay(sortOrder, searchString);
 			fdvm.ListOfDvms = donations;
 			return View(fdvm);
