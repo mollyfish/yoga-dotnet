@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Yoga.Models.EmailViewModels;
+using Yoga.Models.PersonViewModels.EmailViewModels;
 
 namespace Yoga.Models.Interfaces
 {

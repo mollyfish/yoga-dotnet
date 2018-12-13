@@ -21,7 +21,8 @@ namespace Yoga.Models
 		public ICollection<PhoneNumber> PhoneNumbers { get; set; }
 		public ICollection<UserMailingList> MailingLists { get; set; }
 		public ICollection<Donation> Donations { get; set; }
-		public ICollection<Event> EventsAttended { get; set; }
+		public ICollection<EventGuest> EventsAttended { get; set; }
 		public ICollection<Class> ClassesAttended { get; set; }
+		public ICollection<TableGuest> Tables { get; set; }
 	}
 }

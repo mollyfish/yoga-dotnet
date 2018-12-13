@@ -20,10 +20,22 @@ namespace Yoga.Models.Interfaces
 		Task<Person> GetPerson(int Id);
 
 		/// <summary>
-		/// Get single person by Full Name and StreetAddress
+		/// Get single person by Id
+		/// </summary>
+		/// <returns>Single person</returns>
+		Task<Person> GetPerson(int? Id);
+
+		/// <summary>
+		/// Get most recently added single person by Full Name 
 		/// </summary>
 		/// <returns>Single person</returns>
 		Task<Person> GetMostRecentPersonByName(string fullName);
+
+		/// <summary>
+		/// Get all people with first and last name matching parameters 
+		/// </summary>
+		/// <returns>list of people with given first and last names</returns>
+		Task<IEnumerable<Person>> GetPersonByName(string firstName, string lastName);
 
 		/// <summary>
 		/// Update single person

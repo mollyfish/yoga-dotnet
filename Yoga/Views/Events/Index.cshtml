@@ -1,0 +1,47 @@
+﻿@model Yoga.Models.EventViewModels.DisplayEventsDataViewModel
+
+
+@{
+	ViewData["Title"] = "Events";
+}
+
+<h1>Comeback Events</h1>
+
+<h3>All Events</h3>
+
+<table>
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Location</th>
+			<th>Date</th>
+			<th>Tables</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var yogaEvent in Model.EventList)
+		{
+		<tr>
+
+			<td>@yogaEvent.Event.Title</td>
+			<td>@yogaEvent.Event.LocationId</td>
+			<td>@yogaEvent.Event.Date</td>
+			@*<td>
+				@foreach (var table in yogaEvent.Tables)
+				{
+			
+
+					<span>Captain: @table.CaptainId, capacity: @table.Capacity</span>
+				
+				}
+				</td>*@
+
+
+				<td><a asp-route-id="@yogaEvent.Event.Id" asp-action="Details">details</a></td>
+			</tr>
+		}
+	</tbody>
+</table>
+<a asp-action="Create">Add an event</a>
+

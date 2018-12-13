@@ -37,8 +37,17 @@ namespace Yoga.Data
 			modelBuilder.Entity<UserMailingList>().HasKey(uml => new
 			{ uml.UserId, uml.MailingListId });
 
-			modelBuilder.Entity<AttendeeTable>().HasKey(at => new
-			{ at.UserId, at.TableId, at.EventId });
+			modelBuilder.Entity<TableCaptain>().HasKey(c => new
+			{ c.TableId, c.PersonId });
+
+			modelBuilder.Entity<EventGuest>().HasKey(eg => new
+			{ eg.EventId, eg.PersonId });
+
+			modelBuilder.Entity<TableGuest>().HasKey(tg => new
+			{ tg.TableId, tg.PersonId });
+
+			modelBuilder.Entity<EventTable>().HasKey(et => new
+			{ et.EventId, et.TableId });
 
 			modelBuilder.Entity<Person>().HasData(
 				new Person
@@ -203,21 +212,18 @@ namespace Yoga.Data
 				new Table
 				{
 					Id = 1,
-					CaptainId = 3,
 					Capacity = 12,
 					EventId = 1
 				},
 				new Table
 				{
 					Id = 2,
-					CaptainId = 2,
 					Capacity = 18,
 					EventId = 1
 				},
 				new Table
 				{
 					Id = 3,
-					CaptainId = 2,
 					Capacity = 12,
 					EventId = 1
 				}
@@ -311,7 +317,10 @@ namespace Yoga.Data
 		public DbSet<Table> Tables { get; set; }
 		public DbSet<EventMailingList> EventMailingLists { get; set; }
 		public DbSet<UserMailingList> UserMailingLists { get; set; }
-		public DbSet<AttendeeTable> AttendeeTables { get; set; }
+		public DbSet<TableCaptain> TableCaptains { get; set; }
+		public DbSet<EventGuest> EventGuests { get; set; }
+		public DbSet<EventTable> EventTables { get; set; }
+		public DbSet<TableGuest> TableGuests { get; set; }
 		public DbSet<VIP> VIPs { get; set; }
 
 

@@ -1,0 +1,77 @@
+﻿@model Yoga.Models.PersonViewModels.DonationViewModels.AddDonationViewModel
+
+@{
+	ViewData["Title"] = "Add Donation";
+}
+
+<h2>Add Donation</h2>
+<h5>@Model.Donor.FirstName @Model.Donor.LastName</h5>
+
+<form asp-action="Create">
+	<div asp-validation-summary="ModelOnly"></div>
+	<input type="hidden" asp-for="@Model.Donor.Id" />
+	<input type="hidden" asp-for="@Model.Donor.FullName" />
+
+	<label asp-for="@Model.Donor.FirstName"></label>
+	<input asp-for="@Model.Donor.FirstName" />
+	<span asp-validation-for="@Model.Donor.FirstName"></span>
+
+	<label asp-for="@Model.Donor.LastName"></label>
+	<input asp-for="@Model.Donor.LastName" />
+	<span asp-validation-for="@Model.Donor.LastName"></span>
+
+	<label asp-for="@Model.newDonation.Amount"></label>
+	<input asp-for="@Model.newDonation.Amount" />
+	<span asp-validation-for="@Model.newDonation.Amount"></span>
+
+	<label asp-for="@Model.newDonation.Date"></label>
+		<input asp-for="@Model.newDonation.Date" value="@Model.newDonation.Date.ToString("yyyy-MM-dd")" />
+		<span asp-validation-for="@Model.newDonation.Date"></span>
+
+	<label asp-for="@Model.newDonation.DonationType"></label>
+	<select asp-for="@Model.newDonation.DonationType" asp-items="Html.GetEnumSelectList<DonationType>()"></select>
+	<span asp-validation-for="@Model.newDonation.DonationType"></span>
+
+	<label asp-for="@Model.newDonation.DisplayAsAnonymous"></label>
+	<input asp-for="@Model.newDonation.DisplayAsAnonymous" />
+	<span asp-validation-for="@Model.newDonation.DisplayAsAnonymous"></span>
+
+	<label asp-for="@Model.newDonation.DonorDisplayName"></label>
+	<input asp-for="@Model.newDonation.DonorDisplayName" />
+	<span asp-validation-for="@Model.newDonation.DonorDisplayName"></span>
+
+	<label asp-for="@Model.newDonation.EventId"></label>
+	<input asp-for="@Model.newDonation.EventId" />
+	<span asp-validation-for="@Model.newDonation.EventId"></span>
+
+	<label asp-for="@Model.newDonation.Honoree"></label>
+	<input asp-for="@Model.newDonation.Honoree" />
+	<span asp-validation-for="@Model.newDonation.Honoree"></span>
+
+	<label asp-for="@Model.newDonation.TaxReceiptSent"></label>
+	<input asp-for="@Model.newDonation.TaxReceiptSent" />
+	<span asp-validation-for="@Model.newDonation.TaxReceiptSent"></span>
+
+	<label asp-for="@Model.newDonation.TaxReceiptSentDate"></label>
+	<input asp-for="@Model.newDonation.TaxReceiptSentDate" />
+	<span asp-validation-for="@Model.newDonation.TaxReceiptSentDate"></span>
+
+	<label asp-for="@Model.newDonation.ThankYouSent"></label>
+	<input asp-for="@Model.newDonation.ThankYouSent" />
+	<span asp-validation-for="@Model.newDonation.ThankYouSent"></span>
+
+	<label asp-for="@Model.newDonation.ThankYouSentDate"></label>
+	<input asp-for="@Model.newDonation.ThankYouSentDate" />
+	<span asp-validation-for="@Model.newDonation.ThankYouSentDate"></span>
+
+	<input type="hidden" asp-for="@Model.newDonation.DonorId" value="@Model.Donor.Id" />
+
+	@if (Model.ErrorMsg != "")
+	{
+		<p>@Model.ErrorMsg</p>
+	}
+
+	<input type="submit" value="Add" />
+</form>
+
+<a asp-action="Index">Back to Donation List</a>

@@ -1,0 +1,90 @@
+﻿@model Yoga.Models.PersonViewModels.DonationViewModels.FilterableDonationViewModel
+
+@{
+	ViewData["Title"] = "Donations";
+}
+
+<h1>Comeback Donations</h1>
+<form asp-action="Index">
+	<label asp-for="searchString">Filter by year (xxxx): </label>
+	<input asp-for="searchString" />
+	<button type="submit">Go!</button>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th>Id#</th>
+			<th>@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParam })</th>
+			<th>Amount</th>
+			<th>@Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })</th>
+			<th>Method</th>
+			<th>Tax Receipt Sent?</th>
+			<th>Tax Receipt Sent On</th>
+			<th>Thank You Sent?</th>
+			<th>Thank You Sent On</th>
+			<th>Event</th>
+			<th>Honoree</th>
+			<th>Display Anonymously?</th>
+			<th>Donor Display Name</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var dvm in Model.ListOfDvms)
+		{
+
+
+			<tr>
+
+				<td>@dvm.Donation.Id</td>
+				<td>@dvm.Donor.FirstName @dvm.Donor.LastName</td>
+				<td>@dvm.Donation.Amount</td>
+				<td>@dvm.Donation.Date.ToShortDateString()</td>
+				<td>@dvm.Donation.DonationType</td>
+				@if (dvm.Donation.TaxReceiptSent)
+				{
+					<td>&#10004;</td>}
+				else
+				{
+					<td>No</td>}
+				@if (dvm.Donation.TaxReceiptSentDate != null)
+				{
+					<td>@dvm.Donation.TaxReceiptSentDate.Value.ToShortDateString()</td>}
+				else
+				{
+					<td>@dvm.Donation.TaxReceiptSentDate</td>
+				}
+				@if (dvm.Donation.ThankYouSent)
+				{
+					<td>&#10004;</td>}
+				else
+				{
+					<td>No</td>}
+				@if (dvm.Donation.ThankYouSentDate != null)
+				{
+					<td>@dvm.Donation.ThankYouSentDate.Value.ToShortDateString()</td>}
+				else
+				{
+					<td>@dvm.Donation.ThankYouSentDate</td>
+				}
+				<td>@dvm.Donation.EventId</td>
+				<td>@dvm.Donation.Honoree</td>
+				@if (@dvm.Donation.DisplayAsAnonymous)
+				{
+					<td>&#10004;</td>}
+				else
+				{
+					<td></td>}
+				<td>@dvm.Donation.DonorDisplayName</td>
+
+
+				<td><a asp-route-id="@dvm.Donation.Id" asp-route-donor="@dvm.Donation.DonorId" asp-action="Edit">edit</a> | <a asp-route-id="@dvm.Donation.Id" asp-action="Delete">Delete</a></td>
+
+			</tr>
+
+		}
+	</tbody>
+</table>
+<a asp-action="Create">Add someone</a>
+

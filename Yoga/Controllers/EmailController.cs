@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Yoga.Data;
 using Yoga.Models;
 using Yoga.Models.Interfaces;
-using Yoga.Models.EmailViewModels;
+using Yoga.Models.PersonViewModels.EmailViewModels;
 
 namespace Yoga.Controllers
 {

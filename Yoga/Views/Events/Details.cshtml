@@ -1,0 +1,48 @@
+﻿@model Yoga.Models.EventViewModels.DisplayEventDataViewModel
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h2>Event Details</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Location</th>
+			<th>Date</th>
+			<th>Host</th>
+			<th>Tables</th>
+			<th>Guests</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		
+
+		<tr>
+			<td>@Model.Event.Title (<a asp-action="Edit" asp-route-id="@Model.Event.Id">edit</a>)</td>
+			<td>@Model.Event.LocationId</td>
+			<td>@Model.Event.Date</td>
+			<td>@Model.Event.HostId</td>
+			<td>
+				<ul>
+					@if (Model.Event.Tables != null)
+					{
+
+						@foreach (var table in Model.Event.Tables)
+						{
+							<li>@table.Id</li>
+							<li>@table.Capacity</li>
+							<li>@table.Guests</li>
+						}
+					}
+				</ul>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+<a asp-action="Edit" asp-route-id="@Model.Event.Id"></a>
+<a asp-action="Index">Back to List</a>

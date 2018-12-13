@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Yoga.Models.AddressViewModels;
+using Yoga.Models.PersonViewModels.AddressViewModels;
 
 namespace Yoga.Models.Services
 {
@@ -24,6 +24,11 @@ namespace Yoga.Models.Services
 		public async Task<IEnumerable<PhysicalAddress>> GetAddresses()
 		{
 			return await _context.PhysicalAddresses.ToListAsync();
+		}
+
+		public async Task<PhysicalAddress> GetAddress(int id)
+		{
+			return await _context.PhysicalAddresses.FindAsync(id);
 		}
 
 		public async Task<IEnumerable<PhysicalAddress>> GetAddressesByOwner(int ownerId)

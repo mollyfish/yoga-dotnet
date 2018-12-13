@@ -1,10 +1,10 @@
 ﻿@model Yoga.Models.PersonViewModels.DisplayPersonDataViewModel
 
 @{
-	ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.person.FullName Details</h2>
 
 <table>
 	<thead>
@@ -13,7 +13,7 @@
 			<th>Email Addresses</th>
 			<th>Phone Numbers</th>
 			<th>Mailing Addresses</th>
-			<th></th>
+			<th>Donations</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,9 +24,9 @@
 					@foreach (var email in Model.person.EmailAddresses)
 					{
 						<li>
-							@if (email.IsPrimary)
+							@if (email.IsPrimary && Model.person.EmailAddresses.Count > 1)
 							{
-								<p>*</p>
+								<span>*</span>
 							}
 							@email.Email (<a asp-controller="Email" asp-action="Edit" asp-route-id="@email.Id">edit</a>)
 						</li>
@@ -39,9 +39,9 @@
 					@foreach (var phone in Model.person.PhoneNumbers)
 					{
 						<li>
-							@if (phone.IsPrimary)
+							@if (phone.IsPrimary && Model.person.PhoneNumbers.Count > 1)
 							{
-								<p>*</p>
+								<span>*</span>
 							}
 							@phone.Phone (<a asp-controller="PhoneNumber" asp-action="Edit" asp-route-id="@phone.Id" asp-route-owner="@Model.person.Id">edit</a>)
 						</li>
@@ -54,11 +54,12 @@
 					@foreach (var address in Model.person.MailingAddresses)
 					{
 						<li>
-							@if (address.IsPrimary)
-							{
-								<p>*</p>
-							}
+							
 							<address>
+								@if (address.IsPrimary && Model.person.MailingAddresses.Count > 1)
+								{
+									<span>*</span>
+								}
 								<span>@address.Title</span>
 								<span>@address.StreetAddress</span>
 								<span>@address.StreetAddressCont</span>
@@ -68,6 +69,15 @@
 						</li>
 					}
 					<li><a asp-controller="Address" asp-action="Create" asp-route-id="@Model.person.Id">Add new address</a></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					@foreach (var donation in Model.person.Donations)
+					{
+						<li>$@donation.Amount @donation.Date <a asp-controller="Donations" asp-action="Details" asp-route-id="@donation.Id" asp-route-donor="@Model.person.Id">(details)</a></li>
+					}
+					<li><a asp-controller="Donations" asp-action="Create" asp-route-id="@Model.person.Id">Add new donation</a></li>
 				</ul>
 			</td>
 		</tr>

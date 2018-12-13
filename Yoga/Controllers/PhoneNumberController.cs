@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Yoga.Data;
 using Yoga.Models;
 using Yoga.Models.Interfaces;
-using Yoga.Models.PhoneViewModels;
+using Yoga.Models.PersonViewModels.PhoneViewModels;
 
 namespace Yoga.Controllers
 {

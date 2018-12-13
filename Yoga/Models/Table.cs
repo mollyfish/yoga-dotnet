@@ -8,8 +8,11 @@ namespace Yoga.Models
 	public class Table
 	{
 		public int Id { get; set; }
-		public int CaptainId { get; set; }
-		public int Capacity { get; set; }
 		public int EventId { get; set; }
+		public int Capacity { get; set; }
+		public DateTime DateAdded { get; set; }
+
+		//public ICollection<TableCaptain> Captains { get; set; }
+		public ICollection<TableGuest> Guests { get; set; }
 	}
 }
