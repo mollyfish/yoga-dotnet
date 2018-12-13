@@ -24,6 +24,19 @@ namespace Yoga.Models.Interfaces
 		/// Get list of donations for display
 		/// </summary>
 		/// <returns>List of donations</returns>
-		Task<DisplayDonationsViewModel> GetDonationsForDisplay();
+		Task<IEnumerable<DonationViewModel>> GetDonationsForDisplay(string sortOrder);
+
+		/// <summary>
+		/// Creates a donation
+		/// </summary>
+		/// <returns>the new donation</returns>
+		Task<Donation> CreateDonation(Donation donation);
+
+		/// <summary>
+		/// update a donation
+		/// </summary>
+		/// <param name="donation"></param>
+		/// <returns>the updated donation</returns>
+		Task<Donation> UpdateDonation(Donation donation);
 	}
 }

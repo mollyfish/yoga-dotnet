@@ -9,5 +9,6 @@ namespace Yoga.Models.PersonViewModels.DonationViewModels
 	{
 		public Person Donor { get; set; }
 		public Donation newDonation { get; set; }
+		public string ErrorMsg { get; set; }
 	}
 }

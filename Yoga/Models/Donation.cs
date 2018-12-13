@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yoga.Models
 {
-	public class Donation
+	public class Donation : IValidatableObject
 	{
 		public int Id { get; set; }
 		public int DonorId { get; set; }
@@ -16,15 +16,30 @@ namespace Yoga.Models
 		[Required]
 		public decimal Amount { get; set; }
 		[Required]
-		[DisplayFormat(DataFormatString = "{0:d}")]
+		[DataType(DataType.Date)]
 		public DateTime Date { get; set; }
 		public string Honoree { get; set; }
 		public bool TaxReceiptSent { get; set; }
 		public bool ThankYouSent { get; set; }
+		[DataType(DataType.Date)]
 		public DateTime? TaxReceiptSentDate { get; set; }
+		[DataType(DataType.Date)]
 		public DateTime? ThankYouSentDate { get; set; }
 		[Required]
 		public DonationType DonationType { get; set; }
+
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			if (ThankYouSent && ThankYouSentDate == null)
+			{
+				yield return new ValidationResult("Please fill out the date when the thank you was sent");
+			}
+
+			if (TaxReceiptSent && TaxReceiptSentDate == null)
+			{
+				yield return new ValidationResult("Please fill out the date when the tax receipt was sent");
+			}
+		}
 	}
 
 	public enum DonationType

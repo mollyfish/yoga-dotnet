@@ -10,41 +10,69 @@
 <form asp-action="Create">
 	<div asp-validation-summary="ModelOnly"></div>
 	<input type="hidden" asp-for="@Model.Donor.Id" />
-	<input type="hidden" asp-for="@Model.Donor.FirstName" />
-	<input type="hidden" asp-for="@Model.Donor.LastName" />
 	<input type="hidden" asp-for="@Model.Donor.FullName" />
+
+	<label asp-for="@Model.Donor.FirstName"></label>
+	<input asp-for="@Model.Donor.FirstName" />
+	<span asp-validation-for="@Model.Donor.FirstName"></span>
+
+	<label asp-for="@Model.Donor.LastName"></label>
+	<input asp-for="@Model.Donor.LastName" />
+	<span asp-validation-for="@Model.Donor.LastName"></span>
 
 	<label asp-for="@Model.newDonation.Amount"></label>
 	<input asp-for="@Model.newDonation.Amount" />
 	<span asp-validation-for="@Model.newDonation.Amount"></span>
 
 	<label asp-for="@Model.newDonation.Date"></label>
-	<input asp-for="@Model.newDonation.Date" />
-	<span asp-validation-for="@Model.newDonation.Date"></span>
+		<input asp-for="@Model.newDonation.Date" value="@Model.newDonation.Date.ToString("yyyy-MM-dd")" />
+		<span asp-validation-for="@Model.newDonation.Date"></span>
+	@*<label asp-for="@Model.newDonation.Date"></label>
+	@Html.TextBox("date", Model.newDonation.Date.ToString("yyyy-MM-dd"), new { type = "date" })
+	<span asp-validation-for="@Model.newDonation.Date"></span>*@
 
-	@*<label asp-for="@Model.newDonation.StreetAddressCont"></label>
-	<input asp-for="@Model.newDonation.StreetAddressCont" />
-	<span asp-validation-for="@Model.newDonation.StreetAddressCont"></span>
+	<label asp-for="@Model.newDonation.DonationType"></label>
+	<select asp-for="@Model.newDonation.DonationType" asp-items="Html.GetEnumSelectList<DonationType>()"></select>
+	<span asp-validation-for="@Model.newDonation.DonationType"></span>
 
-	<label asp-for="@Model.newDonation.City"></label>
-	<input asp-for="@Model.newDonation.City" />
-	<span asp-validation-for="@Model.newDonation.City"></span>
+	<label asp-for="@Model.newDonation.DisplayAsAnonymous"></label>
+	<input asp-for="@Model.newDonation.DisplayAsAnonymous" />
+	<span asp-validation-for="@Model.newDonation.DisplayAsAnonymous"></span>
 
-	<label asp-for="@Model.newDonation.State"></label>
-	<input asp-for="@Model.newDonation.State" />
-	<span asp-validation-for="@Model.newDonation.State"></span>
+	<label asp-for="@Model.newDonation.DonorDisplayName"></label>
+	<input asp-for="@Model.newDonation.DonorDisplayName" />
+	<span asp-validation-for="@Model.newDonation.DonorDisplayName"></span>
 
-	<label asp-for="@Model.newDonation.ZipCode"></label>
-	<input asp-for="@Model.newDonation.ZipCode" />
-	<span asp-validation-for="@Model.newDonation.ZipCode"></span>
+	<label asp-for="@Model.newDonation.EventId"></label>
+	<input asp-for="@Model.newDonation.EventId" />
+	<span asp-validation-for="@Model.newDonation.EventId"></span>
 
-	<label asp-for="@Model.newDonation.IsPrimary"></label>
-	<input asp-for="@Model.newDonation.IsPrimary" />
-	<span asp-validation-for="@Model.newDonation.IsPrimary"></span>*@
+	<label asp-for="@Model.newDonation.Honoree"></label>
+	<input asp-for="@Model.newDonation.Honoree" />
+	<span asp-validation-for="@Model.newDonation.Honoree"></span>
+
+	<label asp-for="@Model.newDonation.TaxReceiptSent"></label>
+	<input asp-for="@Model.newDonation.TaxReceiptSent" />
+	<span asp-validation-for="@Model.newDonation.TaxReceiptSent"></span>
+
+	<label asp-for="@Model.newDonation.TaxReceiptSentDate"></label>
+	<input asp-for="@Model.newDonation.TaxReceiptSentDate" />
+	<span asp-validation-for="@Model.newDonation.TaxReceiptSentDate"></span>
+
+	<label asp-for="@Model.newDonation.ThankYouSent"></label>
+	<input asp-for="@Model.newDonation.ThankYouSent" />
+	<span asp-validation-for="@Model.newDonation.ThankYouSent"></span>
+
+	<label asp-for="@Model.newDonation.ThankYouSentDate"></label>
+	<input asp-for="@Model.newDonation.ThankYouSentDate" />
+	<span asp-validation-for="@Model.newDonation.ThankYouSentDate"></span>
 
 	<input type="hidden" asp-for="@Model.newDonation.DonorId" value="@Model.Donor.Id" />
 
-
+	@if (Model.ErrorMsg != "")
+	{
+		<p>@Model.ErrorMsg</p>
+	}
 
 	<input type="submit" value="Add" />
 </form>

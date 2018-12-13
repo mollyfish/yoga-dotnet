@@ -7,6 +7,6 @@ namespace Yoga.Models.PersonViewModels.DonationViewModels
 {
 	public class DisplayDonationsViewModel
 	{
-		public ICollection<Donation> DonationList { get; set; }
+		public ICollection<DonationViewModel> DonationList { get; set; }
 	}
 }

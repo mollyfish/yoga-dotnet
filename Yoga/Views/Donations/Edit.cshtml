@@ -1,0 +1,78 @@
+﻿@model Yoga.Models.PersonViewModels.DonationViewModels.DonationViewModel
+
+@{
+	ViewData["Title"] = "Edit Donation";
+}
+
+<h2>Edit Donation</h2>
+<h5>@Model.Donor.FirstName @Model.Donor.LastName</h5>
+
+<form asp-action="Edit">
+	<div asp-validation-summary="ModelOnly"></div>
+	<ul>
+		<li>
+			Donor ID#: @Model.Donor.Id
+		</li>
+	</ul>
+
+	<p>ONLY change the ID number if you want to reassign the donation to a different person!</p>
+	<label asp-for="@Model.Donor.Id"></label>
+	<input asp-for="@Model.Donor.Id" />
+	<span asp-validation-for="@Model.Donor.Id"></span>
+
+	<label asp-for="@Model.Donation.Amount"></label>
+	<input asp-for="@Model.Donation.Amount" />
+	<span asp-validation-for="@Model.Donation.Amount"></span>
+
+	<label asp-for="@Model.Donation.Date"></label>
+	<input asp-for="@Model.Donation.Date" />
+	<span asp-validation-for="@Model.Donation.Date"></span>
+
+	<label asp-for="@Model.Donation.DonationType"></label>
+	<select asp-for="@Model.Donation.DonationType" asp-items="Html.GetEnumSelectList<DonationType>()"></select>
+	<span asp-validation-for="@Model.Donation.DonationType"></span>
+
+	<label asp-for="@Model.Donation.DisplayAsAnonymous"></label>
+	<input asp-for="@Model.Donation.DisplayAsAnonymous" />
+	<span asp-validation-for="@Model.Donation.DisplayAsAnonymous"></span>
+
+	<label asp-for="@Model.Donation.DonorDisplayName"></label>
+	<input asp-for="@Model.Donation.DonorDisplayName" />
+	<span asp-validation-for="@Model.Donation.DonorDisplayName"></span>
+
+	<label asp-for="@Model.Donation.EventId"></label>
+	<input asp-for="@Model.Donation.EventId" />
+	<span asp-validation-for="@Model.Donation.EventId"></span>
+
+	<label asp-for="@Model.Donation.Honoree"></label>
+	<input asp-for="@Model.Donation.Honoree" />
+	<span asp-validation-for="@Model.Donation.Honoree"></span>
+
+	<label asp-for="@Model.Donation.TaxReceiptSent"></label>
+	<input asp-for="@Model.Donation.TaxReceiptSent" />
+	<span asp-validation-for="@Model.Donation.TaxReceiptSent"></span>
+
+	<label asp-for="@Model.Donation.TaxReceiptSentDate"></label>
+	<input asp-for="@Model.Donation.TaxReceiptSentDate" />
+	<span asp-validation-for="@Model.Donation.TaxReceiptSentDate"></span>
+
+	<label asp-for="@Model.Donation.ThankYouSent"></label>
+	<input asp-for="@Model.Donation.ThankYouSent" />
+	<span asp-validation-for="@Model.Donation.ThankYouSent"></span>
+
+	<label asp-for="@Model.Donation.ThankYouSentDate"></label>
+	<input asp-for="@Model.Donation.ThankYouSentDate" />
+	<span asp-validation-for="@Model.Donation.ThankYouSentDate"></span>
+
+	<input type="hidden" asp-for="@Model.Donation.Id" value="@Model.Donation.Id" />
+	<input type="hidden" asp-for="@Model.Donor.FirstName" value="@Model.Donor.FirstName" />
+	<input type="hidden" asp-for="@Model.Donor.LastName" value="@Model.Donor.LastName" />
+
+	@*<input type="hidden" asp-for="@Model.Donation.DonorId" value="@Model.Donor.Id" />*@
+
+
+
+	<input type="submit" value="Save" />
+</form>
+
+<a asp-action="Index">Back to Donation List</a>
