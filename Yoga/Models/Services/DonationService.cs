@@ -92,16 +92,16 @@ namespace Yoga.Models.Services
 			switch (sortOrder)
 			{
 				case "name_desc":
-					model = unsortedList.OrderByDescending(m => m.Donor.LastName).ThenByDescending(m => m.Donor.FirstName).ToList();
+					model = unsortedList.OrderByDescending(m => m.Donor.LastName).ThenByDescending(m => m.Donor.FirstName).ThenByDescending(m => m.Donation.Date).ToList();
 					break;
-				case "Date":
+				case "Name":
+					model = unsortedList.OrderBy(m => m.Donor.LastName).ThenBy(m => m.Donor.FirstName).ThenByDescending(m => m.Donation.Date).ToList();
+					break;
+				case "date_asc":
 					model = unsortedList.OrderBy(m => m.Donation.Date).ThenBy(m => m.Donor.LastName).ThenBy(m => m.Donor.FirstName).ToList();
 					break;
-				case "date_desc":
-					model = unsortedList.OrderByDescending(m => m.Donation.Date).ThenByDescending(m => m.Donor.LastName).ThenByDescending(m => m.Donor.FirstName).ToList();
-					break;
 				default:
-					model = unsortedList.OrderBy(m => m.Donor.LastName).ThenBy(m => m.Donor.FirstName).ToList();
+					model = unsortedList.OrderByDescending(m => m.Donation.Date).ThenBy(m => m.Donor.LastName).ThenBy(m => m.Donor.FirstName).ToList();
 					break;
 			}
 

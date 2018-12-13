@@ -62,30 +62,37 @@ namespace Yoga.Controllers
 
 				var newPerson = await _people.GetMostRecentPersonByName(person.FullName);
 
-				PhysicalAddress address = new PhysicalAddress();
-				address.StreetAddress = model.StreetAddress;
-				address.StreetAddressCont = model.StreetAddressCont;
-				address.City = model.City;
-				address.State = model.State;
-				address.ZipCode = model.ZipCode;
-				address.PersonId = newPerson.Id;
-				address.DateAdded = DateTime.Now;
-				address.IsPrimary = true;
-				await _addresses.CreatePhysicalAddress(address);
-
-				PhoneNumber phone = new PhoneNumber();
-				phone.Phone = model.PhoneNumber;
-				phone.PersonId = newPerson.Id;
-				phone.DateAdded = DateTime.Now;
-				phone.IsPrimary = true;
-				await _phoneNumbers.CreatePhoneNumber(phone);
-
-				EmailAddress email = new EmailAddress();
-				email.Email = model.Email;
-				email.PersonId = newPerson.Id;
-				email.DateAdded = DateTime.Now;
-				email.IsPrimary = true;
-				await _emailAddresses.CreateEmailAddress(email);
+				if (model.StreetAddress != null && model.City != null && model.State != null && model.ZipCode != null)
+				{
+					PhysicalAddress address = new PhysicalAddress();
+					address.StreetAddress = model.StreetAddress;
+					address.StreetAddressCont = model.StreetAddressCont;
+					address.City = model.City;
+					address.State = model.State;
+					address.ZipCode = model.ZipCode;
+					address.PersonId = newPerson.Id;
+					address.DateAdded = DateTime.Now;
+					address.IsPrimary = true;
+					await _addresses.CreatePhysicalAddress(address);
+				}
+				if (model.PhoneNumber != null)
+				{
+					PhoneNumber phone = new PhoneNumber();
+					phone.Phone = model.PhoneNumber;
+					phone.PersonId = newPerson.Id;
+					phone.DateAdded = DateTime.Now;
+					phone.IsPrimary = true;
+					await _phoneNumbers.CreatePhoneNumber(phone);
+				}
+				if (model.Email != null)
+				{
+					EmailAddress email = new EmailAddress();
+					email.Email = model.Email;
+					email.PersonId = newPerson.Id;
+					email.DateAdded = DateTime.Now;
+					email.IsPrimary = true;
+					await _emailAddresses.CreateEmailAddress(email);
+				}
 
 				return RedirectToAction(nameof(Index));
 			}
