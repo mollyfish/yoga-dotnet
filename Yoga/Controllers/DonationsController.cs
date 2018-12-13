@@ -35,14 +35,25 @@ namespace Yoga.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index(string sortOrder)
+		public async Task<IActionResult> Index()
 		{
+			var donations = await _donations.GetDonationsForDisplay();
+			FilterableDonationViewModel fdvm = new FilterableDonationViewModel();
+			fdvm.ListOfDvms = donations;
+			return View(fdvm);
+
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Index(FilterableDonationViewModel fdvm)
+		{
+			string sortOrder = fdvm.sortOrder;
+			string searchString = fdvm.searchString;
 			ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 			ViewBag.DateSortParam = sortOrder == "Date" ? "date_desc" : "Date";
-			var donations = await _donations.GetDonationsForDisplay(sortOrder);
-
-			
-			return View(donations);
+			var donations = await _donations.GetDonationsForDisplay(sortOrder, searchString);
+			fdvm.ListOfDvms = donations;
+			return View(fdvm);
 		}
 
 		[HttpGet]
@@ -76,21 +87,22 @@ namespace Yoga.Controllers
 				var extantDonors = await _people.GetPersonByName(model.Donor.FirstName, model.Donor.LastName);
 				if (extantDonors.Count() == 1)
 				{
-				Donation donation = new Donation();
-				donation.Amount = model.newDonation.Amount;
-				donation.Date = model.newDonation.Date;
-				donation.DisplayAsAnonymous = model.newDonation.DisplayAsAnonymous;
-				donation.DonationType = model.newDonation.DonationType;
-				donation.DonorDisplayName = model.newDonation.DonorDisplayName;
-				donation.DonorId = extantDonors.First().Id;
-				donation.EventId = model.newDonation.EventId;
-				donation.Honoree = model.newDonation.Honoree;
-				donation.TaxReceiptSent = model.newDonation.TaxReceiptSent;
-				donation.TaxReceiptSentDate = model.newDonation.TaxReceiptSentDate;
-				donation.ThankYouSent = model.newDonation.ThankYouSent;
-				donation.ThankYouSentDate = model.newDonation.ThankYouSentDate;
-				await _donations.CreateDonation(donation);
-				} else
+					Donation donation = new Donation();
+					donation.Amount = model.newDonation.Amount;
+					donation.Date = model.newDonation.Date;
+					donation.DisplayAsAnonymous = model.newDonation.DisplayAsAnonymous;
+					donation.DonationType = model.newDonation.DonationType;
+					donation.DonorDisplayName = model.newDonation.DonorDisplayName;
+					donation.DonorId = extantDonors.First().Id;
+					donation.EventId = model.newDonation.EventId;
+					donation.Honoree = model.newDonation.Honoree;
+					donation.TaxReceiptSent = model.newDonation.TaxReceiptSent;
+					donation.TaxReceiptSentDate = model.newDonation.TaxReceiptSentDate;
+					donation.ThankYouSent = model.newDonation.ThankYouSent;
+					donation.ThankYouSentDate = model.newDonation.ThankYouSentDate;
+					await _donations.CreateDonation(donation);
+				}
+				else
 				{
 					model.ErrorMsg = "No donor with that name was found.  Have you added this person to the database? Did you spell their name correctly?";
 					return View(model);
@@ -117,22 +129,22 @@ namespace Yoga.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-					Donation donation = new Donation();
-					donation.Amount = model.Donation.Amount;
-					donation.Date = model.Donation.Date;
-					donation.DisplayAsAnonymous = model.Donation.DisplayAsAnonymous;
-					donation.DonationType = model.Donation.DonationType;
-					donation.DonorDisplayName = model.Donation.DonorDisplayName;
-					donation.DonorId = model.Donor.Id;
-					donation.EventId = model.Donation.EventId;
-					donation.Honoree = model.Donation.Honoree;
-					donation.TaxReceiptSent = model.Donation.TaxReceiptSent;
-					donation.TaxReceiptSentDate = model.Donation.TaxReceiptSentDate;
-					donation.ThankYouSent = model.Donation.ThankYouSent;
-					donation.ThankYouSentDate = model.Donation.ThankYouSentDate;
-					donation.Id = model.Donation.Id;
-					await _donations.UpdateDonation(donation);
-				
+				Donation donation = new Donation();
+				donation.Amount = model.Donation.Amount;
+				donation.Date = model.Donation.Date;
+				donation.DisplayAsAnonymous = model.Donation.DisplayAsAnonymous;
+				donation.DonationType = model.Donation.DonationType;
+				donation.DonorDisplayName = model.Donation.DonorDisplayName;
+				donation.DonorId = model.Donor.Id;
+				donation.EventId = model.Donation.EventId;
+				donation.Honoree = model.Donation.Honoree;
+				donation.TaxReceiptSent = model.Donation.TaxReceiptSent;
+				donation.TaxReceiptSentDate = model.Donation.TaxReceiptSentDate;
+				donation.ThankYouSent = model.Donation.ThankYouSent;
+				donation.ThankYouSentDate = model.Donation.ThankYouSentDate;
+				donation.Id = model.Donation.Id;
+				await _donations.UpdateDonation(donation);
+
 				return RedirectToAction(nameof(Index));
 			}
 			return View(model);

@@ -43,10 +43,38 @@ namespace Yoga.Models.Services
 		/// <summary>
 		/// Gets all donations with related donor info
 		/// </summary>
-		/// <returns>list of DonationVeiwModels that contain Person info and Donation info</returns>
-		public async Task<IEnumerable<DonationViewModel>> GetDonationsForDisplay(string sortOrder)
+		/// <returns></returns>
+		public async Task<IEnumerable<DonationViewModel>> GetDonationsForDisplay()
 		{
 			var donations = await GetDonations();
+			List<Donation> donationList = new List<Donation>();
+			List<Person> donorList = new List<Person>();
+			List<DonationViewModel> unsortedList = new List<DonationViewModel>();
+			foreach (var item in donations)
+			{
+				DonationViewModel vm = new DonationViewModel();
+				vm.Donation = item;
+				vm.Donor = await _context.People.FirstOrDefaultAsync(p => p.Id == item.DonorId);
+				unsortedList.Add(vm);
+			}
+			List<DonationViewModel> model = new List<DonationViewModel>();
+			model = unsortedList.OrderBy(m => m.Donation.Date).ThenBy(m => m.Donor.LastName).ThenBy(m => m.Donor.FirstName).ToList();
+			return model;
+		}
+
+		/// <summary>
+		/// Gets all donations with related donor info
+		/// </summary>
+		/// <returns>list of DonationVeiwModels that contain Person info and Donation info</returns>
+		public async Task<IEnumerable<DonationViewModel>> GetDonationsForDisplay(string sortOrder, string searchString)
+		{
+			var donations = await GetDonations();
+
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				donations = donations.Where(d => d.Date.Year.ToString() == searchString);
+			}
+
 			List<Donation> donationList = new List<Donation>();
 			List<Person> donorList = new List<Person>();
 
@@ -76,7 +104,7 @@ namespace Yoga.Models.Services
 					model = unsortedList.OrderBy(m => m.Donor.LastName).ThenBy(m => m.Donor.FirstName).ToList();
 					break;
 			}
-			
+
 			return model;
 		}
 

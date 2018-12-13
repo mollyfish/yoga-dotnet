@@ -24,7 +24,13 @@ namespace Yoga.Models.Interfaces
 		/// Get list of donations for display
 		/// </summary>
 		/// <returns>List of donations</returns>
-		Task<IEnumerable<DonationViewModel>> GetDonationsForDisplay(string sortOrder);
+		Task<IEnumerable<DonationViewModel>> GetDonationsForDisplay();
+
+		/// <summary>
+		/// Get list of donations for display
+		/// </summary>
+		/// <returns>List of donations</returns>
+		Task<IEnumerable<DonationViewModel>> GetDonationsForDisplay(string sortOrder, string searchString);
 
 		/// <summary>
 		/// Creates a donation
