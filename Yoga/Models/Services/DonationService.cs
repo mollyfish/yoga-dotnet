@@ -104,5 +104,17 @@ namespace Yoga.Models.Services
 			return donation;
 		}
 
+		/// <summary>
+		/// delete a donation
+		/// </summary>
+		/// <param name="address"></param>
+		/// <returns>empty task</returns>
+		public async Task DeleteDonation(int Id)
+		{
+			Donation donation = await GetDonationById(Id);
+			_context.Donations.Remove(donation);
+			await _context.SaveChangesAsync();
+		}
+
 	}
 }

@@ -38,5 +38,12 @@ namespace Yoga.Models.Interfaces
 		/// <param name="donation"></param>
 		/// <returns>the updated donation</returns>
 		Task<Donation> UpdateDonation(Donation donation);
+
+		/// <summary>
+		/// delete a donation
+		/// </summary>
+		/// <param name="donation"></param>
+		/// <returns>empty task</returns>
+		Task DeleteDonation(int Id);
 	}
 }

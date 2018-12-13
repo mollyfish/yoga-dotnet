@@ -130,11 +130,35 @@ namespace Yoga.Controllers
 					donation.TaxReceiptSentDate = model.Donation.TaxReceiptSentDate;
 					donation.ThankYouSent = model.Donation.ThankYouSent;
 					donation.ThankYouSentDate = model.Donation.ThankYouSentDate;
+					donation.Id = model.Donation.Id;
 					await _donations.UpdateDonation(donation);
 				
 				return RedirectToAction(nameof(Index));
 			}
 			return View(model);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Delete(int Id)
+		{
+			Donation donation = await _donations.GetDonationById(Id);
+			if (donation == null)
+			{
+				return NotFound();
+			}
+			DonationViewModel dvm = new DonationViewModel();
+			dvm.Donation = donation;
+			var donor = await _people.GetPerson(donation.DonorId);
+			dvm.Donor = donor;
+			return View(dvm);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(int Id)
+		{
+			await _donations.DeleteDonation(Id);
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }

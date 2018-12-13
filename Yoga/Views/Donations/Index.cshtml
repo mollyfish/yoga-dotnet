@@ -16,14 +16,14 @@
 			<th>Amount</th>
 			<th>@Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParam })</th>
 			<th>Method</th>
-			<th>Event</th>
-			<th>Honoree</th>
-			<th>Display Anonymously?</th>
-			<th>Donor Display Name</th>
 			<th>Tax Receipt Sent?</th>
 			<th>Tax Receipt Sent On</th>
 			<th>Thank You Sent?</th>
 			<th>Thank You Sent On</th>
+			<th>Event</th>
+			<th>Honoree</th>
+			<th>Display Anonymously?</th>
+			<th>Donor Display Name</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -39,15 +39,6 @@
 			<td>@dvm.Donation.Amount</td>
 			<td>@dvm.Donation.Date.ToShortDateString()</td>
 			<td>@dvm.Donation.DonationType</td>
-			<td>@dvm.Donation.EventId</td>
-			<td>@dvm.Donation.Honoree</td>
-			@if (@dvm.Donation.DisplayAsAnonymous)
-			{
-				<td>&#10004;</td>}
-			else
-			{
-				<td></td>}
-			<td>@dvm.Donation.DonorDisplayName</td>
 			@if (dvm.Donation.TaxReceiptSent)
 			{
 				<td>&#10004;</td>}
@@ -74,8 +65,19 @@
 			{
 				<td>@dvm.Donation.ThankYouSentDate</td>
 			}
+			<td>@dvm.Donation.EventId</td>
+			<td>@dvm.Donation.Honoree</td>
+			@if (@dvm.Donation.DisplayAsAnonymous)
+			{
+				<td>&#10004;</td>}
+			else
+			{
+				<td></td>}
+			<td>@dvm.Donation.DonorDisplayName</td>
 
-			<td><a asp-route-id="@dvm.Donation.Id" asp-route-donor="@dvm.Donation.DonorId" asp-action="Edit">edit</a></td>
+
+			<td><a asp-route-id="@dvm.Donation.Id" asp-route-donor="@dvm.Donation.DonorId" asp-action="Edit">edit</a> | <a asp-route-id="@dvm.Donation.Id" asp-action="Delete">Delete</a></td>
+
 		</tr>
 			
 		}

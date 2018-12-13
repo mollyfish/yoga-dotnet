@@ -27,9 +27,6 @@
 	<label asp-for="@Model.newDonation.Date"></label>
 		<input asp-for="@Model.newDonation.Date" value="@Model.newDonation.Date.ToString("yyyy-MM-dd")" />
 		<span asp-validation-for="@Model.newDonation.Date"></span>
-	@*<label asp-for="@Model.newDonation.Date"></label>
-	@Html.TextBox("date", Model.newDonation.Date.ToString("yyyy-MM-dd"), new { type = "date" })
-	<span asp-validation-for="@Model.newDonation.Date"></span>*@
 
 	<label asp-for="@Model.newDonation.DonationType"></label>
 	<select asp-for="@Model.newDonation.DonationType" asp-items="Html.GetEnumSelectList<DonationType>()"></select>

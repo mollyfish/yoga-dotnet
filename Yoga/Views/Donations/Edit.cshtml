@@ -7,7 +7,7 @@
 <h2>Edit Donation</h2>
 <h5>@Model.Donor.FirstName @Model.Donor.LastName</h5>
 
-<form asp-action="Edit">
+<form asp-action="Edit" asp-route-id="@Model.Donation.Id">
 	<div asp-validation-summary="ModelOnly"></div>
 	<ul>
 		<li>
@@ -70,7 +70,7 @@
 
 	@*<input type="hidden" asp-for="@Model.Donation.DonorId" value="@Model.Donor.Id" />*@
 
-
+	<span asp-validation-for="@Model.Donation"></span>
 
 	<input type="submit" value="Save" />
 </form>
