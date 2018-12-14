@@ -12,10 +12,23 @@
 
 <h1>Comeback Yoga</h1>
 @if ((await AuthorizationService.AuthorizeAsync(User, "AdminsOnly")).Succeeded)
-{
-	<a asp-controller="Access" asp-action="/Index">Manage Admin access</a>
-	<a asp-controller="UploadFiles" asp-action="/Index">Upload data</a>
-	<a asp-controller="People" asp-action="/Index">Manage people records</a>
+{<ul>
+	<li>
+		<a asp-controller="Access" asp-action="/Index">Manage Admin Access</a>
+	</li>
+	<li>
+		<a asp-controller="UploadFiles" asp-action="/Index">Upload Bulk Data</a>
+	</li>
+	<li>
+		<a asp-controller="People" asp-action="/Index">Manage People</a>
+	</li>
+	<li>
+		<a asp-controller="Donations" asp-action="/Index">Manage Donations</a>
+	</li>
+	<li>
+		<a asp-controller="Events" asp-action="/Index">Manage Events</a>
+	</li>
+</ul>
 }
 else
 {

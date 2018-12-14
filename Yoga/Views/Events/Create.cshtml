@@ -1,5 +1,34 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Yoga.Models.EventViewModels.AddEventViewModel
+
 @{
+	ViewData["Title"] = "Create";
 }
+
+<h2>Create new Event</h2>
+
+
+<form asp-action="Create">
+	<div asp-validation-summary="ModelOnly"></div>
+
+	<label asp-for="newEvent.Date"></label>
+	<input asp-for="newEvent.Date" value="newEvent.Date.ToString("yyyy-MM-dd")" />
+	<span asp-validation-for="newEvent.Date"></span>
+
+	<label asp-for="newEvent.HostId"></label>
+	<input asp-for="newEvent.HostId" />
+	<span asp-validation-for="newEvent.HostId"></span>
+
+	<label asp-for="newEvent.LocationId"></label>
+	<input asp-for="newEvent.LocationId" />
+	<span asp-validation-for="newEvent.LocationId"></span>
+
+	<label asp-for="newEvent.Title"></label>
+	<input asp-for="newEvent.Title" />
+	<span asp-validation-for="newEvent.Title"></span>
+
+
+
+	<input type="submit" value="Create" />
+</form>
+
+<a asp-action="Index">Back to Event List</a>

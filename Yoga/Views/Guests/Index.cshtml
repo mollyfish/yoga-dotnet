@@ -1,0 +1,22 @@
+﻿@model Yoga.Models.EventViewModels.GuestViewModels.DisplayEventGuestsViewModel
+
+
+@{
+	ViewData["Title"] = "Guests";
+}
+
+<h1>Comeback Events</h1>
+
+<h3>Guests for @Model.Evm.Event.Title</h3>
+
+<ul>
+		@foreach (var item in Model.Guests)
+		{
+			<li>
+				@item.GuestName
+				
+			</li>
+		}
+</ul>
+@*<a asp-action="Create">Add an event</a>*@
+

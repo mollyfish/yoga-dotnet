@@ -8,5 +8,6 @@ namespace Yoga.Models.EventViewModels.TableViewModels
 	public class TableViewModel
 	{
 		public Table Table;
+		public Event Event { get; set; }
 	}
 }

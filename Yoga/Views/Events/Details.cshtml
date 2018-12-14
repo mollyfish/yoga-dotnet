@@ -40,9 +40,22 @@
 					}
 				</ul>
 			</td>
+			<td>
+				<ul>
+					@if (Model.Event.Guests != null)
+					{
+
+						@foreach (var guest in Model.Event.Guests)
+						{
+							<li>@guest.EventId</li>
+							<li>@guest.PersonId</li>
+							<li>@guest.DateAdded</li>
+						}
+					}
+				</ul>
+			</td>
 		</tr>
 
 	</tbody>
 </table>
-<a asp-action="Edit" asp-route-id="@Model.Event.Id"></a>
 <a asp-action="Index">Back to List</a>

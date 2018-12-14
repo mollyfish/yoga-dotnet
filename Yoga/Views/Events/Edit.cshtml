@@ -29,21 +29,40 @@
 	<input asp-for="@Model.Event.HostId" />
 	<span asp-validation-for="@Model.Event.HostId"></span>
 
-	@if (@Model.Event.Tables != null) {
-	@foreach (var table in Model.Event.Tables)
+	@if (@Model.Event.Tables != null)
 	{
-		<label asp-for="@table"></label>
-		<input asp-for="@table" />
-		<span asp-validation-for="@table"></span>
+		@foreach (var table in Model.Event.Tables)
+		{
+			<label asp-for="@table"></label>
+			<input asp-for="@table" />
+			<span asp-validation-for="@table"></span>
+		}
 	}
-	} else
+	else
 	{
-		<a asp-controller="Tables" asp-action="Create" asp-route-id="@Model.Event.Id">Add a table</a>
+		@*<a asp-controller="Tables" asp-action="Create" asp-route-id="@Model.Event.Id">Add a table</a>*@
 	}
 
+	@if (@Model.Event.Guests != null)
+	{
+		@foreach (var guest in Model.Event.Guests)
+		{
+			<label asp-for="@guest"></label>
+			<input asp-for="@guest" />
+			<span asp-validation-for="@guest"></span>
+		}
+	}
+	else
+	{
+		@*<a asp-controller="Tables" asp-action="Create" asp-route-id="@Model.Event.Id">Add a table</a>*@
+	}
 
 
 	<input type="submit" value="Save" />
 </form>
+
+<a asp-controller="Guests" asp-action="Index" asp-route-id="@Model.Event.Id">Add a guest</a>
+
+<a asp-action="Details" asp-route-id="@Model.Event.Id">Back to Details</a>
 
 <a asp-action="Details" asp-route-id="@Model.Event.Id">Back to Details</a>

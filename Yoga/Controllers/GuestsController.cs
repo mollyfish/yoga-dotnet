@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Yoga.Models;
 using Yoga.Models.EventViewModels;
 using Yoga.Models.Interfaces;
-using Yoga.Models.EventViewModels.TableViewModels;
+using Yoga.Models.EventViewModels.GuestViewModels;
 
 namespace Yoga.Controllers
 {
 	[Authorize(Policy = "AdminsOnly")]
-	public class EventsController : Controller
+	public class GuestsController : Controller
 	{
 		private readonly IPeople _people;
 		private readonly IEvent _events;
@@ -19,7 +19,7 @@ namespace Yoga.Controllers
 		private readonly IAddress _addresses;
 		private readonly IGuest _guests;
 
-		public EventsController(
+		public GuestsController(
 			IPeople people,
 			IEvent events,
 			ITable tables,
@@ -34,10 +34,14 @@ namespace Yoga.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(int Id)
 		{
-			DisplayEventsDataViewModel model = await packEventData();
-			return View(model);
+			DisplayEventGuestsViewModel egvm = new DisplayEventGuestsViewModel();
+			var yogaEvent = await _events.GetEvent(Id);
+			egvm.Evm = yogaEvent;
+			var guests = await _guests.GetGuestsForDisplay(Id);
+			egvm.Guests = guests;
+			return View(egvm);
 		}
 
 		[HttpGet]
@@ -48,27 +52,43 @@ namespace Yoga.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Create()
+		public async Task<IActionResult> Create(int Id)
 		{
-			AddEventViewModel model = new AddEventViewModel();
+			AddGuestViewModel model = new AddGuestViewModel();
+			var result = await _events.GetEvent(Id);
+			Event ev = new Event();
+			model.Event = result.Event;
 			return View(model);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(int id, [Bind("Id,newEvent,Owner")] AddEventViewModel evm)
+		public async Task<IActionResult> Create(int id, [Bind("Id,newGuest,FirstName,LastName")] AddGuestViewModel gvm)
 		{
 			if (ModelState.IsValid)
 			{
-				evm.newEvent.DateAdded = DateTime.Now;
-				
-				await _events.CreateEvent(evm.newEvent);
-				//// make a display model
-				//DisplayEventDataViewModel devm = new DisplayEventDataViewModel();
-				//devm.Event = evm.newEvent;
-				return RedirectToAction("Details", "Events", new { id = evm.newEvent.Id });
+				var peopleWithGivenName = await _people.GetPersonByName(gvm.FirstName, gvm.LastName);
+				List<Person> list = new List<Person>();
+				foreach (var person in peopleWithGivenName)
+				{
+					list.Add(person);
+				}
+				if (list.Count == 1)
+				{
+					Person[] people = list.ToArray();
+					gvm.newGuest.PersonId = people[0].Id;
+				}
+
+				gvm.newGuest.DateAdded = DateTime.Now;
+
+				await _guests.CreateGuest(gvm.newGuest);
+
+				var ev = await _events.GetEvent(gvm.newGuest.EventId);
+				ev.Event.Guests.Add(gvm.newGuest);
+
+				return RedirectToAction("Details", "Events", new { id = gvm.newGuest.EventId });
 			}
-			return View(evm);
+			return View(gvm);
 		}
 
 		[HttpGet]
@@ -81,16 +101,16 @@ namespace Yoga.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("Id,Event,Owner")] EventViewModel evm)
+		public async Task<IActionResult> Edit(int id, [Bind("Id,Event,Owner")] EventViewModel gvm)
 		{
 			if (ModelState.IsValid)
 			{
-				await _events.UpdateEvent(evm.Event);
+				await _events.UpdateEvent(gvm.Event);
 
-				
-				return RedirectToAction("Details", "Events", new { id = evm.Event.Id });
+
+				return RedirectToAction("Details", "Events", new { id = gvm.Event.Id });
 			}
-			return View(evm);
+			return View(gvm);
 		}
 
 		private async Task<DisplayEventsDataViewModel> packEventData()
@@ -107,7 +127,7 @@ namespace Yoga.Controllers
 				{
 					if (table.EventId == occasion.Id)
 					{
-						
+
 						tables.Add(table);
 					}
 				}
@@ -115,10 +135,10 @@ namespace Yoga.Controllers
 				{
 
 				}
-				EventViewModel evm = new EventViewModel();
+				EventViewModel gvm = new EventViewModel();
 				occasion.Tables = tables;
-				evm.Event = occasion;
-				model.EventList.Add(evm);
+				gvm.Event = occasion;
+				model.EventList.Add(gvm);
 			}
 			return model;
 		}
@@ -126,14 +146,12 @@ namespace Yoga.Controllers
 		{
 			DisplayEventDataViewModel model = new DisplayEventDataViewModel();
 			Event resultEvent = new Event();
-			var guests = await _guests.GetGuests(id);
-
 			model.Event = resultEvent;
 			var yogaEvent = await _events.GetEvent(id);
 			try
 			{
 
-			model.Event.Date = yogaEvent.Event.Date;
+				model.Event.Date = yogaEvent.Event.Date;
 			}
 			catch (Exception)
 			{

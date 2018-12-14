@@ -1,0 +1,31 @@
+﻿@model Yoga.Models.EventViewModels.GuestViewModels.AddGuestViewModel
+
+@{
+	ViewData["Title"] = "Add Guest";
+}
+
+<h2>Add Guest to</h2>
+<h5>@Model.Event.Title</h5>
+
+<form asp-action="Create">
+	<div asp-validation-summary="ModelOnly"></div>
+	<input type="hidden" asp-for="@Model.Event.Id" />
+	<input type="hidden" asp-for="@Model.newGuest.EventId" value="@Model.Event.Id" />
+
+	<label asp-for="@Model.FirstName"></label>
+	<input asp-for="@Model.FirstName" />
+	<span asp-validation-for="@Model.FirstName"></span>
+
+	<label asp-for="@Model.LastName"></label>
+	<input asp-for="@Model.LastName" />
+	<span asp-validation-for="@Model.LastName"></span>
+
+	@if (Model.ErrorMsg != "")
+	{
+		<p>@Model.ErrorMsg</p>
+	}
+
+	<input type="submit" value="Add" />
+</form>
+
+<a asp-controller="Events" asp-action="Edit" asp-route-id="@Model.Event.Id">Back to Event Details</a>

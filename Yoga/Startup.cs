@@ -73,6 +73,7 @@ namespace Yoga
 			services.AddScoped<IEvent, EventService>();
 			services.AddScoped<ITable, TableService>();
 			services.AddScoped<IDonation, DonationService>();
+			services.AddScoped<IGuest, GuestService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

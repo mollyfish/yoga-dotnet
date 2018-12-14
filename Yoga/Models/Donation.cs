@@ -14,6 +14,7 @@ namespace Yoga.Models
 		public bool DisplayAsAnonymous { get; set; }
 		public int? EventId { get; set; }
 		[Required]
+		[DataType(DataType.Currency)]
 		public decimal Amount { get; set; }
 		[Required]
 		[DataType(DataType.Date)]
