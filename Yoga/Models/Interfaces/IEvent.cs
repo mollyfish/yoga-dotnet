@@ -15,6 +15,13 @@ namespace Yoga.Models.Interfaces
 		Task<IEnumerable<Event>> GetEvents();
 
 		/// <summary>
+		/// get detailed event data for display
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns>DisplayEventViewModel</returns>
+		Task<DisplayEventViewModel> GetEventDetailsForDisplay(int Id);
+
+		/// <summary>
 		/// Get list of events by title
 		/// </summary>
 		/// <param name="Id">owner Id</param>

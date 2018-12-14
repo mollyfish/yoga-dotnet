@@ -7,6 +7,8 @@ namespace Yoga.Models.EventViewModels.TableViewModels
 {
 	public class AddTableViewModel
 	{
+		public string EventName { get; set; }
+		public ICollection<EventGuest> PossibleCaptains { get; set; }
 		public Person Captain { get; set; }
 		public Table newTable { get; set; }
 	}

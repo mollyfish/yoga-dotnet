@@ -10,7 +10,6 @@ namespace Yoga.Models
 	{
 		public int Id { get; set; }
 		public int LocationId { get; set; }
-		public int? HostId { get; set; }
 		[Required]
 		public string Title { get; set; }
 		[Required]
@@ -20,5 +19,7 @@ namespace Yoga.Models
 
 		public ICollection<Table> Tables { get; set; }
 		public ICollection<EventGuest> Guests { get; set; }
+		public ICollection<TableCaptain> Captains { get; set; }
+		public ICollection<EventHost> Hosts { get; set; }
 	}
 }

@@ -1,4 +1,4 @@
-﻿@model Yoga.Models.EventViewModels.DisplayEventsDataViewModel
+﻿@model Yoga.Models.EventViewModels.DisplayEventsViewModel
 
 
 @{
@@ -15,33 +15,21 @@
 			<th>Title</th>
 			<th>Location</th>
 			<th>Date</th>
-			<th>Tables</th>
 			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach (var yogaEvent in Model.EventList)
 		{
-		<tr>
+			<tr>
 
-			<td>@yogaEvent.Event.Title</td>
-			<td>@yogaEvent.Event.LocationId</td>
-			<td>@yogaEvent.Event.Date</td>
-			@*<td>
-				@foreach (var table in yogaEvent.Tables)
-				{
-			
-
-					<span>Captain: @table.CaptainId, capacity: @table.Capacity</span>
-				
-				}
-				</td>*@
-
-
+				<td>@yogaEvent.Event.Title</td>
+				<td>@yogaEvent.Event.LocationId</td>
+				<td>@yogaEvent.Event.Date.ToShortDateString()</td>
 				<td><a asp-route-id="@yogaEvent.Event.Id" asp-action="Details">details</a></td>
 			</tr>
 		}
 	</tbody>
 </table>
-<a asp-action="Create">Add an event</a>
+<a asp-action="Create" class="button-link">add an event</a>
 

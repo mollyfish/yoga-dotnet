@@ -10,6 +10,7 @@ namespace Yoga.Models
 	{
 		public int EventId { get; set; }
 		public int PersonId { get; set; }
+		public string GuestName { get; set; }
 		[DataType(DataType.Date)]
 		public DateTime DateAdded { get; set; }
 	}

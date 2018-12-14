@@ -47,7 +47,7 @@ namespace Yoga.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Details(int Id)
 		{
-			DisplayEventDataViewModel model = await packSingleEventData(Id);
+			DisplayEventViewModel model = await packSingleEventData(Id);
 			return View(model);
 		}
 
@@ -94,7 +94,7 @@ namespace Yoga.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			DisplayEventDataViewModel yogaEvent = await packSingleEventData(id);
+			DisplayEventViewModel yogaEvent = await packSingleEventData(id);
 
 			return View(yogaEvent);
 		}
@@ -113,9 +113,9 @@ namespace Yoga.Controllers
 			return View(gvm);
 		}
 
-		private async Task<DisplayEventsDataViewModel> packEventData()
+		private async Task<DisplayEventsViewModel> packEventData()
 		{
-			DisplayEventsDataViewModel model = new DisplayEventsDataViewModel();
+			DisplayEventsViewModel model = new DisplayEventsViewModel();
 			model.EventList = new List<EventViewModel>();
 
 			var allEvents = await _events.GetEvents();
@@ -142,9 +142,9 @@ namespace Yoga.Controllers
 			}
 			return model;
 		}
-		private async Task<DisplayEventDataViewModel> packSingleEventData(int id)
+		private async Task<DisplayEventViewModel> packSingleEventData(int id)
 		{
-			DisplayEventDataViewModel model = new DisplayEventDataViewModel();
+			DisplayEventViewModel model = new DisplayEventViewModel();
 			Event resultEvent = new Event();
 			model.Event = resultEvent;
 			var yogaEvent = await _events.GetEvent(id);
@@ -159,7 +159,6 @@ namespace Yoga.Controllers
 				throw;
 			}
 			model.Event.Guests = yogaEvent.Event.Guests;
-			model.Event.HostId = yogaEvent.Event.HostId;
 			model.Event.LocationId = yogaEvent.Event.LocationId;
 			model.Event.Tables = yogaEvent.Event.Tables;
 			model.Event.Title = yogaEvent.Event.Title;

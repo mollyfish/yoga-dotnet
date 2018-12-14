@@ -39,6 +39,45 @@ namespace Yoga.Models.Services
 			return yogaEventData;
 		}
 
+		public async Task<DisplayEventViewModel> GetEventDetailsForDisplay(int Id)
+		{
+			DisplayEventViewModel model = new DisplayEventViewModel();
+			var yogaEvent = await _context.Events.FindAsync(Id);
+			var address = await _context.PhysicalAddresses.FindAsync(yogaEvent.LocationId);
+			var hostIdList = await _context.EventHosts.Where(eh => eh.EventId == Id).ToListAsync();
+			var guestIdList = await _context.EventGuests.Where(eg => eg.EventId == Id).ToListAsync();
+			foreach (var guest in guestIdList)
+			{
+				var person = await _context.People.FindAsync(guest.PersonId);
+				guest.GuestName = $"{person.FirstName} {person.LastName}";
+			}
+			var tableIdList = await _context.EventTables.Where(et => et.EventId == Id).ToListAsync();
+			List<TableCaptain> captainIdList = new List<TableCaptain>();
+			List<Table> tables = new List<Table>();
+			foreach (var table in tableIdList)
+			{
+				var cap = await _context.TableCaptains.FirstOrDefaultAsync(tc => tc.TableId == table.TableId);
+				captainIdList.Add(cap);
+				var actualTable = await _context.Tables.FirstOrDefaultAsync(ac => ac.Id == table.TableId);
+				tables.Add(actualTable);
+			}
+			foreach (var table in tables)
+			{
+				List<TableGuest> tableGuestIdList = await _context.TableGuests.Where(tg => tg.TableId == table.Id).ToListAsync();
+				foreach (var tableGuest in tableGuestIdList)
+				{
+					var actualPerson = await _context.People.FirstOrDefaultAsync(ap => ap.Id == tableGuest.PersonId);
+					tableGuest.GuestName = $"{actualPerson.FirstName} {actualPerson.LastName}";
+					table.Guests.Add(tableGuest);
+				}
+			}
+			model.Event = yogaEvent;
+			model.EventGuests = guestIdList;
+			model.Tables = tables;
+			model.Location = address;
+			return model;
+		}
+
 		public async Task<Event> UpdateEvent(Event yogaEvent)
 		{
 			_context.Events.Update(yogaEvent);

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Yoga.Models.EventViewModels
 {
-	public class DisplayEventsDataViewModel
+	public class DisplayEventsViewModel
 	{
 		public ICollection<EventViewModel> EventList { get; set; }
 

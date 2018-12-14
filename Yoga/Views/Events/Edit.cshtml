@@ -1,4 +1,4 @@
-﻿@model Yoga.Models.EventViewModels.DisplayEventDataViewModel
+﻿@model Yoga.Models.EventViewModels.DisplayEventViewModel
 
 @{
 	ViewData["Title"] = "Edit";
@@ -25,9 +25,6 @@
 	<input asp-for="@Model.Event.LocationId" />
 	<span asp-validation-for="@Model.Event.LocationId"></span>
 
-	<label asp-for="@Model.Event.HostId"></label>
-	<input asp-for="@Model.Event.HostId" />
-	<span asp-validation-for="@Model.Event.HostId"></span>
 
 	@if (@Model.Event.Tables != null)
 	{

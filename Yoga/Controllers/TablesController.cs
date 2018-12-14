@@ -16,22 +16,29 @@ namespace Yoga.Controllers
 	{
 		private readonly IPeople _people;
 		private readonly ITable _tables;
+		private readonly IEvent _events;
 
 		public TablesController(
 			IPeople people,
-			ITable tables)
+			ITable tables,
+			IEvent events)
 		{
 			_people = people;
 			_tables = tables;
+			_events = events;
 		}
 
 		[HttpGet]
-		public IActionResult Create(int Id)
+		public async Task<IActionResult> Create(int Id)
 		{
 
 			AddTableViewModel model = new AddTableViewModel();
 			Table newTable = new Table();
 			newTable.EventId = Id;
+			var ev = await _events.GetEvent(Id);
+			ICollection<EventGuest> egs = ev.Event.Guests;
+			model.PossibleCaptains = egs;
+			ev.Event.Title = model.EventName;
 			model.newTable = newTable;
 			return View(model);
 		}

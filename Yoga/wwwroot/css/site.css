@@ -11,93 +11,134 @@ body
 	font-size: 16px;
 }
 
-h1 {
+h1
+{
 	font-size: 300%;
 }
 
-h2 {
+h2
+{
 	font-size: 200%;
 }
 
-h3 {
+h3
+{
 	font-size: 180%;
 }
 
-h4 {
+h4
+{
 	font-size: 130%;
 }
 
-h5 {
+h5
+{
 	font-size: 120%;
 }
 
-h6 {
+h6
+{
 	font-size: 110%;
 }
-p {
+
+p
+{
 	font-size: 100%;
 }
 
-header {
+header
+{
 	background-color: gray;
 }
 
-nav ul li {
+nav ul li
+{
 	display: inline-block;
 	padding: 0 1em;
 	float: right;
 }
 
-table {
+table
+{
 	outline: 1px solid #000;
 }
 
-thead{
+thead
+{
 	border-bottom: 3px solid gray;
 }
 
-tr {
+tr
+{
 	border-top: 1px solid gray;
 }
 
-tr:first-child {
-	border-top: none;
-}
+	tr:first-child
+	{
+		border-top: none;
+	}
 
-th, td {
+th, td
+{
 	padding: 0.5em;
 	border-left: 1px solid #d8d8d8;
 }
 
-table li {
+table li
+{
 	border-top: 1px solid #d8d8d8;
 	padding: 0.5em 0;
 }
 
-table li:first-child {
-	border-top: none;
-}
+	table li:first-child
+	{
+		border-top: none;
+	}
 
-table li:last-child {
-	margin-top: 1em;
-}
+	table li:last-child
+	{
+		margin-top: 1em;
+	}
 
-footer {
+footer
+{
 	text-align: center;
 	background-color: gray;
 }
 
-.sticky-wrapper {
+.sticky-wrapper
+{
 	flex: 1 0 auto;
 }
 
-.login-register {
+.button-link
+{
+	display: inline-block;
+	padding: 0.5em 0.6em;
+	border: 1px solid black;
+	text-decoration: none;
+	border-radius: 5px;
+	line-height: 1.5em;
+	background-color: #fff;
+	margin: 0.5em;
+	color: #000;
+}
+
+.button-link:hover {
+	background-color: aliceblue;
+	border-color: gray;
+	color: rebeccapurple;
+}
+
+.login-register
+{
 	text-align: right;
 	padding: 0 1em;
 	outline: 1px solid blue;
 }
 
-.login-status {
+.login-status
+{
 	text-align: right;
 	padding: 0 1em;
 	outline: 1px solid red;

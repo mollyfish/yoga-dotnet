@@ -37,6 +37,9 @@ namespace Yoga.Data
 			modelBuilder.Entity<UserMailingList>().HasKey(uml => new
 			{ uml.UserId, uml.MailingListId });
 
+			modelBuilder.Entity<EventHost>().HasKey(eh => new
+			{ eh.EventId, eh.PersonId });
+
 			modelBuilder.Entity<TableCaptain>().HasKey(c => new
 			{ c.TableId, c.PersonId });
 
@@ -212,18 +215,21 @@ namespace Yoga.Data
 				new Table
 				{
 					Id = 1,
+					Title = "Table 1",
 					Capacity = 12,
 					EventId = 1
 				},
 				new Table
 				{
 					Id = 2,
+					Title = "Table 2",
 					Capacity = 18,
 					EventId = 1
 				},
 				new Table
 				{
 					Id = 3,
+					Title = "Table 3",
 					Capacity = 12,
 					EventId = 1
 				}
@@ -317,6 +323,7 @@ namespace Yoga.Data
 		public DbSet<Table> Tables { get; set; }
 		public DbSet<EventMailingList> EventMailingLists { get; set; }
 		public DbSet<UserMailingList> UserMailingLists { get; set; }
+		public DbSet<EventHost> EventHosts { get; set; }
 		public DbSet<TableCaptain> TableCaptains { get; set; }
 		public DbSet<EventGuest> EventGuests { get; set; }
 		public DbSet<EventTable> EventTables { get; set; }

@@ -36,14 +36,14 @@ namespace Yoga.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			DisplayEventsDataViewModel model = await packEventData();
+			DisplayEventsViewModel model = await packEventData();
 			return View(model);
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> Details(int Id)
 		{
-			DisplayEventDataViewModel model = await packSingleEventData(Id);
+			DisplayEventViewModel model = await _events.GetEventDetailsForDisplay(Id);
 			return View(model);
 		}
 
@@ -61,11 +61,8 @@ namespace Yoga.Controllers
 			if (ModelState.IsValid)
 			{
 				evm.newEvent.DateAdded = DateTime.Now;
-				
+
 				await _events.CreateEvent(evm.newEvent);
-				//// make a display model
-				//DisplayEventDataViewModel devm = new DisplayEventDataViewModel();
-				//devm.Event = evm.newEvent;
 				return RedirectToAction("Details", "Events", new { id = evm.newEvent.Id });
 			}
 			return View(evm);
@@ -74,7 +71,7 @@ namespace Yoga.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			DisplayEventDataViewModel yogaEvent = await packSingleEventData(id);
+			DisplayEventViewModel yogaEvent = await packSingleEventData(id);
 
 			return View(yogaEvent);
 		}
@@ -93,9 +90,9 @@ namespace Yoga.Controllers
 			return View(evm);
 		}
 
-		private async Task<DisplayEventsDataViewModel> packEventData()
+		private async Task<DisplayEventsViewModel> packEventData()
 		{
-			DisplayEventsDataViewModel model = new DisplayEventsDataViewModel();
+			DisplayEventsViewModel model = new DisplayEventsViewModel();
 			model.EventList = new List<EventViewModel>();
 
 			var allEvents = await _events.GetEvents();
@@ -122,9 +119,9 @@ namespace Yoga.Controllers
 			}
 			return model;
 		}
-		private async Task<DisplayEventDataViewModel> packSingleEventData(int id)
+		private async Task<DisplayEventViewModel> packSingleEventData(int id)
 		{
-			DisplayEventDataViewModel model = new DisplayEventDataViewModel();
+			DisplayEventViewModel model = new DisplayEventViewModel();
 			Event resultEvent = new Event();
 			var guests = await _guests.GetGuests(id);
 
@@ -141,7 +138,6 @@ namespace Yoga.Controllers
 				throw;
 			}
 			model.Event.Guests = yogaEvent.Event.Guests;
-			model.Event.HostId = yogaEvent.Event.HostId;
 			model.Event.LocationId = yogaEvent.Event.LocationId;
 			model.Event.Tables = yogaEvent.Event.Tables;
 			model.Event.Title = yogaEvent.Event.Title;
